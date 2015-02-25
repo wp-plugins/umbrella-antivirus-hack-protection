@@ -1,7 +1,7 @@
 === Umbrella ===
 Contributors: rkjellberg
-Tags: antivirus, hack protection, firewall
-Keywords: antivirus, hack protection, firewall
+Tags: antivirus, anti hack, protection, firewall
+Keywords: antivirus, anti hack, protection, firewall
 Requires at least: 3.0.1
 Tested up to: 4.1.1
 Stable tag: 1.0

@@ -4,7 +4,7 @@
 	Plugin URI: http://www.rasmuskjellberg.se/wordpress-plugins/umbrella/
 	Description: WordPress Antivirus and Hack protection. More functions are planned and will be launched soon. Look for an update :) 
 	Author: Rasmus Kjellberg
-	Version: 1.0
+	Version: 1.0.1
 	Author URI: http://www.rasmuskjellberg.se/
 */
 /*  
@@ -23,7 +23,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Define some good constants.
-define( 'UMBRELLA__VERSION', '1.0' );
+define( 'UMBRELLA__VERSION', '1.0.1' );
 define( 'UMBRELLA__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
