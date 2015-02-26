@@ -14,11 +14,18 @@ namespace Umbrella;
 			'../'
 		);
 
-		foreach($forbidden_strings as $forbidden)
-		{
+		foreach($forbidden_strings as $forbidden) {
+			
 			// Return true if $value is found in $forbidden
-			if ( strpos($value, $forbidden) !== false ) 
-				return true;
+			if (is_array($value)) {
+				foreach($value as $val) {
+					if ( strpos($val, $forbidden) !== false ) 
+						return true;
+				}
+			} else {
+				if ( strpos($value, $forbidden) !== false ) 
+					return true;
+			}
 		}
 
 		// Return false if no forbidden strings is found.
