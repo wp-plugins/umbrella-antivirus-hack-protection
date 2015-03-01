@@ -18,16 +18,16 @@
 		<thead>
 			<tr>
 				<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-				<th style="width: 150px;">Module</th>
-				<th>Description</th>
+				<th style="width: 150px;"><?php _e('Module', 'umbrella'); ?></th>
+				<th><?php _e('Description', 'umbrella'); ?></th>
 			</tr>
 		</thead>
 
 		<tfoot>
 			<tr>
 				<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-				<th style="width: 150px;">Module</th>
-				<th>Description</th>
+				<th style="width: 150px;"><?php _e('Module', 'umbrella'); ?></th>
+				<th><?php _e('Description', 'umbrella'); ?></th>
 			</tr>
 		</tfoot>
 

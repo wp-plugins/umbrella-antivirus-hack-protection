@@ -1,10 +1,10 @@
 <?php
 /*
-	Plugin Name: Umbrella (Antivirus & Hack Protection)
+	Plugin Name: Umbrella
 	Plugin URI: http://www.rasmuskjellberg.se/wordpress-plugins/umbrella/
 	Description: WordPress Antivirus and Hack protection. More functions are planned and will be launched soon. Look for an update :) 
 	Author: Rasmus Kjellberg
-	Version: 1.0.3
+	Version: 1.1
 	Author URI: http://www.rasmuskjellberg.se/
 */
 /*  
@@ -23,7 +23,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Define some good constants.
-define( 'UMBRELLA__VERSION', '1.0.3' );
+define( 'UMBRELLA__VERSION', '1.1' );
 define( 'UMBRELLA__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -31,8 +31,9 @@ define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 // There is no libraries yet..
 
 // Include all source files
-require_once( UMBRELLA__PLUGIN_DIR . 'src/controller.class.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'src/modules.class.php' );
+require_once( UMBRELLA__PLUGIN_DIR . 'src/filehandler.class.php' );
+require_once( UMBRELLA__PLUGIN_DIR . 'src/controller.class.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'src/autoload.class.php' );
 
 // Run the autoloader

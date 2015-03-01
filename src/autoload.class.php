@@ -3,7 +3,7 @@ namespace Umbrella;
 class Autoload
 {
 	// Hooks to autoload.
-	protected $autoload = array( 'init', 'admin_init', 'admin_menu' );
+	protected $autoload = array( 'plugins_loaded', 'init', 'admin_init', 'admin_menu');
 
 	/**
 	 * Autoload Helper
@@ -39,7 +39,16 @@ class Autoload
 
 		// Load all activated modules
 		$this->load_modules();
-	}	
+	}		
+
+	/**
+	 * Plugins Loaded
+	 * This function will run when WordPress calls the hook "plugins_loaded".
+	 * @return void
+	*/
+	public function plugins_loaded() {
+		// load_plugin_textdomain( 'umbrella' );
+	}
 
 	/**
 	 * Admin Init
@@ -60,7 +69,8 @@ class Autoload
 	public function admin_menu() {
 		add_menu_page( 'DASHBOARD | WordPress Antivirus and Hack Protection', 'Umbrella', 'administrator', 'umbrella', array('Umbrella\controller', 'modules') , 'dashicons-shield', 3 ); 
 		add_submenu_page( 'umbrella', 'MODULES | WordPress Antivirus and Hack Protection', 'Modules', 'administrator', 'umbrella', array('Umbrella\controller', 'modules') ); 
-		add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
+		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
+		add_submenu_page( 'umbrella', 'VULNERABILITIES | WordPress Antivirus and Hack Protection', 'Vulnerabilities', 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
 	}
 
 	/**
