@@ -10,7 +10,6 @@ namespace Umbrella;
 		$forbidden_strings = array(
 			'wp-config.php',
 			'.htaccess',
-			'.php',
 			'../'
 		);
 
@@ -41,7 +40,8 @@ namespace Umbrella;
 	{
 		if (is_forbidden($value))
 		{
-
+			http_response_code(401);
+			die("Umbrella: 401 Forbidden Request.");
 		}
 	}
 

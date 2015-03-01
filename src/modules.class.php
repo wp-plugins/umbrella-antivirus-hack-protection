@@ -6,7 +6,8 @@ class Modules
 	static $valid_modules = array(
 		array('hide_version', 'Hide Versions', 'Hide version numbers in your front-end source code for WordPress-core and all of your plugins. This will affect meta-tags, stylesheet and javascripts urls.'),
 		array('disable_ping', 'Disable Pings', 'Completely turn off trackbacks &amp; pingbacks to your site.'),
-		array('filter_requests', 'Filter Requests', 'block all unauthorized and irrelevant requests through query strings.'),
+		array('filter_requests', 'Filter Requests', 'Block all unauthorized and irrelevant requests through query strings.'),
+		array('captcha_login', 'Captcha Login', 'Add CAPTCHA to login screen for a more secure login. <span style="color:red">This module requires the <a target="_blank" href="plugin-install.php?tab=search&s=Really%20Simple%20CAPTCHA">Really Simple CAPTCHA</a> plugin.</span>'),
 	);
 
 	static public function validate_modules( $options ) {

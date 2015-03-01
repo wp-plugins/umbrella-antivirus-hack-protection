@@ -1,10 +1,10 @@
 === Umbrella ===
 Contributors: rkjellberg
-Tags: antivirus, anti hack, protection, firewall
-Keywords: antivirus, anti hack, protection, firewall
+Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number
+Keywords: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.0.3
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,21 +12,38 @@ WordPress Antivirus and Hack protection.
 
 == Description ==
 
-Umbrella helps you protect your WordPress site and checks your plugin and folders for vulnerabilities. 
-More functions are planned and will be launched soon. Look for an update :)
+Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. 
+More functions are planned and will be launched soon. Please look for updates :)
 
-Major features in Umbrella include:
-
+= Major features in Umbrella include =
+* Vulnerabilities scanner for themes and plugins. 
+* Add CAPTCHA to login screen for a more secure login. 
+* Block all unauthorized and irrelevant requests through query strings.
 * Hide version numbers in your front-end source code for WordPress-core and all of your plugins. 
 * Completely turn off trackbacks & pingbacks to your site.
-* Block all unauthorized and irrelevant requests through query strings.
+
+= Planned features =
+* Scan WordPress folders and help user with permission issues.
+* Get notified by email when a new vulnerability is found.
+* Monitor WordPress directory for unknown file changes by comparing md5 strings.
+* Log all suspicious traffic for later analysation.
 
 == Installation ==
 
-Upload the Umbrella plugin to your blog, Activate it & thats it.
+1. Upload the entire `umbrella-antivirus-hack-protection` folder to the `/wp-content/plugins/` directory.
+1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-This plugin does nothing by default, and that's because we want you to know whats happening behind the scenes. With that said, please choose wich modules you want to use with Umbrella. Even if nothing is loaded by default, we recommend you to use activate them all for best protection. Cheers =)
+You will find 'Umbrella' menu in your WordPress admin panel.
+
+== Screenshots ==
+
+1. screenshot-1.png 
+2. screenshot-2.png 
 
 == Changelog ==
 
-Nothing yet.
+= 1.1 =
+*Release Date - 1st March, 2015*
+
+* Vulnerabilities scanner for themes and plugins. 
+* Add CAPTCHA to login screen for a more secure login. 

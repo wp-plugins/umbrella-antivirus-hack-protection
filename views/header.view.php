@@ -1,4 +1,5 @@
 <div class="wrap about-wrap">
+
 	<h1>Umbrella</h1>
 
 	<div class="about-text">
