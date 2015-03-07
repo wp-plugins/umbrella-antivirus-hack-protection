@@ -1,9 +1,11 @@
-<?php Umbrella\Controller::header(); ?>
+<?php 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+Umbrella\Controller::header(); ?>
 
 <p>
-	This plugin is doing nothing by default, and that's because we want you to know whats happening behind the scenes. 
+	<?php _e('This plugin is doing nothing by default, and that\'s because we want you to know whats happening behind the scenes. 
 	With that said, please choose wich modules you want to use with Umbrella. Even if nothing is loaded by default, 
-	we recommend you to use activate them all for best protection. Cheers =)
+	we recommend you to activate them all for best protection. Cheers =)', UMBRELLA__TEXTDOMAIN); ?>
 </p>
 
 <form method="post" action="options.php">
@@ -18,16 +20,16 @@
 		<thead>
 			<tr>
 				<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-				<th style="width: 150px;"><?php _e('Module', 'umbrella'); ?></th>
-				<th><?php _e('Description', 'umbrella'); ?></th>
+				<th style="width: 150px;"><?php _e('Module', UMBRELLA__TEXTDOMAIN); ?></th>
+				<th><?php _e('Description', UMBRELLA__TEXTDOMAIN); ?></th>
 			</tr>
 		</thead>
 
 		<tfoot>
 			<tr>
 				<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-				<th style="width: 150px;"><?php _e('Module', 'umbrella'); ?></th>
-				<th><?php _e('Description', 'umbrella'); ?></th>
+				<th style="width: 150px;"><?php _e('Module', UMBRELLA__TEXTDOMAIN); ?></th>
+				<th><?php _e('Description', UMBRELLA__TEXTDOMAIN); ?></th>
 			</tr>
 		</tfoot>
 

@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Umbrella v1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-03-07 15:25:14+0000\n"
+"Last-Translator: rasmus <rk@youngmedia.se>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: SWEDEN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "Umbrella"
+msgstr ""
+
+#. translators: plugin header field 'PluginURI'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "http://www.rasmuskjellberg.se/wordpress-plugins/umbrella/"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "WordPress Antivirus and Hack protection. More functions are planned and will be launched soon. Look for an update :)"
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "Rasmus Kjellberg"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "http://www.rasmuskjellberg.se/"
+msgstr ""
+
+#: views/permissions.view.php:5
+#@ umbrella-antivirus-hack-protection
+msgid "Writable Files"
+msgstr "Skrivbara filer"
+
+#: views/permissions.view.php:11
+#: views/permissions.view.php:19
+#@ umbrella-antivirus-hack-protection
+msgid "File"
+msgstr "Fil"
+
+#: views/permissions.view.php:12
+#: views/permissions.view.php:20
+#@ umbrella-antivirus-hack-protection
+msgid "Chmod"
+msgstr "Chmod"
+
+#: views/permissions.view.php:13
+#: views/permissions.view.php:21
+#@ umbrella-antivirus-hack-protection
+msgid "Recommended"
+msgstr "Rekommenderad"
+
+#: src/autoload.class.php:78
+#: src/controller.class.php:17
+#: views/scanner.view.php:4
+#@ umbrella-antivirus-hack-protection
+msgid "File Scanner"
+msgstr "Genomsök filer"
+
+#: views/scanner.view.php:7
+#@ umbrella-antivirus-hack-protection
+msgid "This will scan your core folders for unexpected files or modifications."
+msgstr "Låt oss genomsöka din WordPress installation efter fel, modifieringar och ouppskattade filer."
+
+#: views/scanner.view.php:11
+#@ umbrella-antivirus-hack-protection
+msgid "Begin scanning"
+msgstr "Starta genomsökning"
+
+#: views/scanner.view.php:22
+#: views/scanner.view.php:30
+#@ umbrella-antivirus-hack-protection
+msgid "Error"
+msgstr "Felmeddelande"
+
+#: views/scanner.view.php:23
+#: views/scanner.view.php:31
+#@ umbrella-antivirus-hack-protection
+msgid "File path"
+msgstr "Sökväg"
+
+#: views/scanner.view.php:24
+#: views/scanner.view.php:32
+#@ umbrella-antivirus-hack-protection
+msgid "Action"
+msgstr "Hantera"
+
+#: views/scanner_no_md5_list.view.php:10
+#@ umbrella-antivirus-hack-protection
+msgid "An update for"
+msgstr "En uppdatering för"
+
+#: views/scanner_no_md5_list.view.php:12
+#@ umbrella-antivirus-hack-protection
+msgid "will be available within a few hours."
+msgstr "blir tillgängligt inom några timmar."
+
+#: views/scanner_no_md5_list.view.php:14
+#@ umbrella-antivirus-hack-protection
+msgid "We guess your'e an early bird and just updated to the latest WordPress version."
+msgstr "Du har antagligen precis uppdaterat din WordPress installation till den senaste uppdateringen."
+
+#: views/scanner_no_md5_list.view.php:15
+#@ umbrella-antivirus-hack-protection
+msgid "Our database is not updated yet, but don't worry cause if you just made an update, you're core-files must be fine."
+msgstr "Våran fildatabas är inte uppdaterad ännu - men oroa dig inte - för om du precis gjorde en uppdatering är den förmodligen felfri."
+
+#: views/scanner_no_md5_list.view.php:17
+#@ umbrella-antivirus-hack-protection
+msgid "Please also make sure that Umbrella is running the latest version"
+msgstr "Var också säker på att Umbrella är uppdaterat till senaste version."
+
+#: views/scanner_no_md5_list.view.php:20
+#@ umbrella-antivirus-hack-protection
+msgid "This scanner only works with newer versions of WordPress. Please update your core-files."
+msgstr "Den här scannern fungerar endast med nyare versioner av WordPress. Var vänlig uppdatera nu."
+
+#: views/vulnerabilities.view.php:5
+#@ umbrella-antivirus-hack-protection
+msgid "Plugin Vulnerabilities"
+msgstr "Säkerhetshål i plugins"
+
+#: views/vulnerabilities.view.php:11
+#: views/vulnerabilities.view.php:19
+#@ umbrella-antivirus-hack-protection
+msgid "Plugin Name"
+msgstr "Plugin namn"
+
+#: views/vulnerabilities.view.php:12
+#: views/vulnerabilities.view.php:20
+#@ umbrella-antivirus-hack-protection
+msgid "Plugin Version"
+msgstr "Plugin version"
+
+#: src/autoload.class.php:77
+#: src/controller.class.php:16
+#: views/vulnerabilities.view.php:13
+#: views/vulnerabilities.view.php:21
+#: views/vulnerabilities.view.php:76
+#: views/vulnerabilities.view.php:84
+#@ umbrella-antivirus-hack-protection
+msgid "Vulnerabilities"
+msgstr "Säkerhetshål"
+
+#: views/vulnerabilities.view.php:36
+#: views/vulnerabilities.view.php:99
+#@ umbrella-antivirus-hack-protection
+msgid "No vulnerabilities found."
+msgstr "Inga kända säkerhetshål hittades."
+
+#: views/vulnerabilities.view.php:39
+#: views/vulnerabilities.view.php:101
+#@ umbrella-antivirus-hack-protection
+msgid "Couldn't connect. Please reload this page."
+msgstr "Kunde inte ansluta."
+
+#: views/vulnerabilities.view.php:68
+#@ umbrella-antivirus-hack-protection
+msgid "Theme Vulnerabilities"
+msgstr "Säkerhetshål i teman"
+
+#: views/vulnerabilities.view.php:74
+#: views/vulnerabilities.view.php:82
+#@ umbrella-antivirus-hack-protection
+msgid "Theme Name"
+msgstr "Temats namn"
+
+#: views/vulnerabilities.view.php:75
+#: views/vulnerabilities.view.php:83
+#@ umbrella-antivirus-hack-protection
+msgid "Theme Version"
+msgstr "Temats version"
+
+#: src/autoload.class.php:75
+#: src/controller.class.php:15
+#@ umbrella-antivirus-hack-protection
+msgid "Modules"
+msgstr "Moduler"
+
+#: views/vulnerabilities.view.php:56
+#@ umbrella-antivirus-hack-protection
+msgid "No external information found about this vulnerabilty."
+msgstr "Ingen extern information hittades om det här säkerhetshålet."
+
+#: src/modules.class.php:11
+#@ umbrella-antivirus-hack-protection
+msgid "Hide version numbers in your front-end source code for WordPress-core and all of your plugins. This will affect meta-tags, stylesheet and javascripts urls."
+msgstr "Göm versionsnummer i källkoden för din webbplats. Det här påverkar både meta-taggar, css- och javascript länkar."
+
+#: src/modules.class.php:12
+#@ umbrella-antivirus-hack-protection
+msgid "Completely turn off trackbacks &amp; pingbacks to your site."
+msgstr "Stäng av möjligheterna för trackbacks & pingbacks till din webbplats."
+
+#: src/modules.class.php:13
+#@ umbrella-antivirus-hack-protection
+msgid "Block all unauthorized and irrelevant requests through query strings."
+msgstr "Blockera alla misstänkta förfrågningar genom query strings."
+
+#: src/modules.class.php:14
+#, php-format
+#@ umbrella-antivirus-hack-protection
+msgid "Add CAPTCHA to login screen for a more secure login. <span style=\"color:red\">This module requires the <a target=\"_blank\" href=\"plugin-install.php?tab=search&s=Really%20Simple%20CAPTCHA\">Really Simple CAPTCHA</a> plugin.</span>"
+msgstr "Öka säkerheten och skyddet för WordPress med CAPTCHA-inloggning. <span style=\"color:red\">Den här modulen kräver att  <a target=\"_blank\" href=\"plugin-install.php?tab=search&s=Really%20Simple%20CAPTCHA\">Really Simple CAPTCHA</a> är installerat.</span>"
+
+#: lib/scanner.lib.php:119
+#: lib/scanner.lib.php:137
+#@ umbrella-antivirus-hack-protection
+msgid "Actions not available in the BETA version"
+msgstr "Hantering ej möjlig i BETA-version"
+
+#. translators: plugin header field 'Version'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "1.2"
+msgstr ""
+
+#: views/header.view.php:10
+#@ umbrella-antivirus-hack-protection
+msgid ""
+"Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. \n"
+"More functions are planned and will be launched with the next update."
+msgstr "Umbrella skyddar din WordPress hemsida med plugin och teman mot kända säkerhetshål, virus och attacker. Mer funktioner är planerade och släpps med nästa uppdatering."
+
+#: views/dashboard.view.php:23
+#: views/dashboard.view.php:31
+#@ umbrella-antivirus-hack-protection
+msgid "Module"
+msgstr "Modul"
+
+#: views/dashboard.view.php:24
+#: views/dashboard.view.php:32
+#@ umbrella-antivirus-hack-protection
+msgid "Description"
+msgstr "Beskrivning"
+
+#: views/dashboard.view.php:6
+#@ umbrella-antivirus-hack-protection
+msgid ""
+"This plugin is doing nothing by default, and that's because we want you to know whats happening behind the scenes. \n"
+"\tWith that said, please choose wich modules you want to use with Umbrella. Even if nothing is loaded by default, \n"
+"\twe recommend you to activate them all for best protection. Cheers =)"
+msgstr "Det här pluginet gör inget av sig självt utan användarens vetskap. Det är för att vi tycker att användaren själv ska ha full kontroll över sin webbplats. Välj vilka moduler & funktioner du vill aktivera. Även om inga moduler laddas automatiskt rekommenderar vi att aktivera alla för bäst säkerhet."
+

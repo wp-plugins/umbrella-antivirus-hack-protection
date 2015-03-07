@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 // Displaying the Captcha Field in the Login Form
 add_action('login_form', function (){
   if(class_exists('ReallySimpleCaptcha'))

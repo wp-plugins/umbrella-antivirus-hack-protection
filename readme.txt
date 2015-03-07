@@ -1,10 +1,10 @@
 === Umbrella ===
 Contributors: rkjellberg
-Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number
-Keywords: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number
+Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
+Keywords: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,11 +21,11 @@ More functions are planned and will be launched soon. Please look for updates :)
 * Block all unauthorized and irrelevant requests through query strings.
 * Hide version numbers in your front-end source code for WordPress-core and all of your plugins. 
 * Completely turn off trackbacks & pingbacks to your site.
+* Scan WordPress for unknown files and file modifications by comparing md5 strings.
 
 = Planned features =
 * Scan WordPress folders and help user with permission issues.
 * Get notified by email when a new vulnerability is found.
-* Monitor WordPress directory for unknown file changes by comparing md5 strings.
 * Log all suspicious traffic for later analysation.
 
 == Installation ==
@@ -42,8 +42,15 @@ You will find 'Umbrella' menu in your WordPress admin panel.
 
 == Changelog ==
 
+= 1.2 =
+*Release Date - 7 March, 2015*
+
+* BETA version of File Scanner
+* Bugfix: Undefined property: stdClass::$url when vulnerability has no external URLs.
+* Translation to swedish (sv_SE)
+
 = 1.1 =
-*Release Date - 1st March, 2015*
+*Release Date - 1 March, 2015*
 
 * Vulnerabilities scanner for themes and plugins. 
 * Add CAPTCHA to login screen for a more secure login. 

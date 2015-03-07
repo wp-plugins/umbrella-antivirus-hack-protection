@@ -1,5 +1,8 @@
 <?php
 namespace Umbrella;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 class Autoload
 {
 	// Hooks to autoload.
@@ -37,8 +40,9 @@ class Autoload
 	*/
 	public function init() {
 
-		// Load all activated modules
+		// Load all activated modules.
 		$this->load_modules();
+		
 	}		
 
 	/**
@@ -47,7 +51,7 @@ class Autoload
 	 * @return void
 	*/
 	public function plugins_loaded() {
-		// load_plugin_textdomain( 'umbrella' );
+
 	}
 
 	/**
@@ -68,9 +72,10 @@ class Autoload
 	*/
 	public function admin_menu() {
 		add_menu_page( 'DASHBOARD | WordPress Antivirus and Hack Protection', 'Umbrella', 'administrator', 'umbrella', array('Umbrella\controller', 'modules') , 'dashicons-shield', 3 ); 
-		add_submenu_page( 'umbrella', 'MODULES | WordPress Antivirus and Hack Protection', 'Modules', 'administrator', 'umbrella', array('Umbrella\controller', 'modules') ); 
+		add_submenu_page( 'umbrella', 'MODULES | WordPress Antivirus and Hack Protection', __('Modules', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella', array('Umbrella\controller', 'modules') ); 
 		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
-		add_submenu_page( 'umbrella', 'VULNERABILITIES | WordPress Antivirus and Hack Protection', 'Vulnerabilities', 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
+		add_submenu_page( 'umbrella', 'VULNERABILITIES | WordPress Antivirus and Hack Protection', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
+		add_submenu_page( 'umbrella', 'FILE SCANNER | WordPress Antivirus and Hack Protection', __('File Scanner', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
 	}
 
 	/**
@@ -81,7 +86,7 @@ class Autoload
 	public function load_modules() {
 		
 		// Get all available modules from module class.
-		$modules = Modules::$valid_modules;
+		$modules = Modules::valid_modules();
 		$options = get_option('umbrella_load_modules');
 
 		// Loop trough all available modules and include them if they are activated.

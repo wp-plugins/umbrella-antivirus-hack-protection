@@ -1,5 +1,6 @@
 <?php
 namespace Umbrella;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class Controller
 {
 	/**
@@ -11,8 +12,9 @@ class Controller
 
 		$data = array(
 		'navbars' => array(
-			array('umbrella', 'Modules'),
-			array('umbrella-vulnerabilities', 'Vulnerabilities'),
+			array('umbrella', __('Modules', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-scanner', __('File Scanner', UMBRELLA__TEXTDOMAIN) . ' (BETA)'),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
 		));
 
@@ -37,9 +39,33 @@ class Controller
 	*/
 	static public function modules() {
 
-		$data['available_options'] = Modules::$valid_modules;
+		$data['available_options'] = Modules::valid_modules();
 		self::make('dashboard', $data);
 	}		
+
+	/**
+	 * Scanner
+	 * Controller for view Scanner
+	 * @return void
+	*/
+	static public function scanner() {
+
+		wp_enqueue_script('umbrella-filescanner', UMBRELLA__PLUGIN_URL . 'js/filescanner.js');
+
+		$scanner = new Scanner;
+		$locale = get_locale();
+		$data_file = UMBRELLA__PLUGIN_DIR . "data/wordpress-{$scanner->wp_version()}.db";
+
+		// Show error page if no data file found.
+		if (!file_exists($data_file))
+			return self::make('scanner_no_md5_list');
+		
+		$data = array();
+
+		self::make('scanner', $data);
+
+	}
+
 
 	/**
 	 * Vulnerabilities
@@ -52,6 +78,9 @@ class Controller
 
 		foreach ($all_plugins as $key => $plugin)
 		{
+			unset($merge);
+			unset($json);
+
 			$slug = explode('/', $key);
 			$slug = reset($slug);
 
@@ -60,10 +89,16 @@ class Controller
 
 			if ( false === ( $json = get_transient( "umbrella_vulndb_{$slug}" ) ) ) {
 				$json = wp_remote_get( "https://wpvulndb.com/api/v1/plugins/{$slug}" );
-				set_transient( "umbrella_vulndb_{$slug}", $json, 3600 );
+				
+				if (!\is_wp_error($json))
+					set_transient( "umbrella_vulndb_{$slug}", $json, 300 );
 			}
 
-			$merge = array('vulndb' => $json);
+			if (!\is_wp_error($json))
+				$merge = array('vulndb' => $json);
+			else 
+				$merge['vulndb']['error']['code'] = '501';
+			
 		
 			$plugins[] = array_merge($plugin,$merge);
 		}
@@ -73,17 +108,28 @@ class Controller
 
 		foreach ($all_themes as $slug => $theme)
 		{
+			unset($merge);
+			unset($json);
+			
 			if ( false === ( $json = get_transient( "umbrella_vulndb_theme_{$slug}" ) ) ) {
 				$json = wp_remote_get( "https://wpvulndb.com/api/v1/themes/{$slug}" );
-				set_transient( "umbrella_vulndb_theme_{$slug}", $json, 3600 );
+				
+				if (!\is_wp_error($json))
+					set_transient( "umbrella_vulndb_theme_{$slug}", $json, 300 );
 			}
 
 			$merge = array(
-				'vulndb' => $json,
 				'Name' => $theme->get('Name'),
 				'Version' => $theme->get('Version'),
 				'Author' => $theme->get('Author'),
 			);
+
+			if (!\is_wp_error($json))
+				$merge['vulndb'] = $json;
+			else {
+				$merge['vulndb']['error']['code'] = '0';
+			}
+
 			$themes[] = $merge;
 
 		}
