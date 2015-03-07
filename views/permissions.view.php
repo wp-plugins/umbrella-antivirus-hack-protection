@@ -1,22 +1,24 @@
-<?php Umbrella\Controller::header(); ?>
+<?php 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+Umbrella\Controller::header(); ?>
 
-<h4><?php _e('Writable Files', 'umbrella'); ?></h4>
+<h4><?php _e('Writable Files', UMBRELLA__TEXTDOMAIN); ?></h4>
 <p>
 </p>
 <table class="wp-list-table widefat plugins">
 	<thead>
 		<tr>
-			<th><?php _e('File', 'umbrella'); ?></th>
-			<th><?php _e('Chmod', 'umbrella'); ?></th>
-			<th><?php _e('Recommended', 'umbrella'); ?></th>
+			<th><?php _e('File', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('Chmod', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('Recommended', UMBRELLA__TEXTDOMAIN); ?></th>
 		</tr>
 	</thead>
 
 	<tfoot>
 		<tr>
-			<th><?php _e('File', 'umbrella'); ?></th>
-			<th><?php _e('Chmod', 'umbrella'); ?></th>
-			<th><?php _e('Recommended', 'umbrella'); ?></th>
+			<th><?php _e('File', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('Chmod', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('Recommended', UMBRELLA__TEXTDOMAIN); ?></th>
 		</tr>
 	</tfoot>
 

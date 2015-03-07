@@ -1,9 +1,14 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap about-wrap">
 
-	<h1>Umbrella</h1>
+	<h1>
+		Umbrella
+		<!-- a href="#" class="add-new-h2">More info @ umbrellaantivirus.io</a -->
+	</h1>
 
 	<div class="about-text">
-		WordPress Antivirus and Hack protection. This is just a BETA version. More functions are planned and will be launched soon. Look for an update :)
+		<?php _e('Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. 
+More functions are planned and will be launched with the next update.', UMBRELLA__TEXTDOMAIN); ?>
 	</div>
 
 	<h2 class="nav-tab-wrapper">

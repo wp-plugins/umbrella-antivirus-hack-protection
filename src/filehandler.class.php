@@ -1,8 +1,47 @@
 <?php
 namespace Umbrella;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 class FileHandler
 {
 	public static $time_to_cache = 3600;
+
+	public function search_core()
+	{
+		$exclude = array(
+			'wp-content/themes',
+			'wp-content/uploads',
+			'wp-content/plugins',
+			'wp-config.php'
+		);
+
+		$all_files = $this->scan_files(ABSPATH, false);
+
+		if (!is_array($all_files))
+			return array();
+
+		foreach ($all_files as $file)
+		{
+			$continue = 0;
+			foreach ($exclude as $e)
+			{
+				if ( strpos($file['path'], $e) !== false ) 
+					$continue = 1;
+			}
+
+			if ($continue == 0) {
+				$output[] = $file;
+			} else $continue = 1;
+
+		}
+
+		return $output;
+	}
+
+	public function search_all($path, $cache = true)
+	{
+	    return $this->scan_files($path, false);
+	}
 
 	public function search($path, $key, $value, $cache = true)
 	{
@@ -36,51 +75,47 @@ class FileHandler
 		if ($cache == false)
 			delete_transient("umbrella_file_list-{$path}");
 
-		if ( false === ( $output = get_transient( "umbrella_file_list-{$path}" ) ) )
+		// Ignore Files
+		$ignore = array('.','..');
+
+		// Return false if $path is empty.
+		if (!isset($path))
+			return false;
+
+		// Get files and directories list.
+		$files = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator($path) );
+		
+		// new empty output
+		$output = array();
+
+		$i = 0;
+		foreach ($files as $file)
 		{
-			// Ignore Files
-			$ignore = array('.','..');
 
-			// Return false if $path is empty.
-			if (!isset($path))
-				return false;
+			// Convert from object to string.
+			$file = (string) $file;
 
-			// Get files and directories list.
-			$files = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator($path) );
-			
-			// new empty output
-			$output = array();
+			// Get file name from path string.
+			$filename = explode('/', $file);
+			$filename = end($filename);
 
-			$i = 0;
-			foreach ($files as $file)
+			// Remove files found in $ignore.
+			if (!in_array( $filename , $ignore))
 			{
 
-				// Convert from object to string.
-				$file = (string) $file;
-
-				// Get file name from path string.
-				$filename = explode('/', $file);
-				$filename = end($filename);
-
-				// Remove files found in $ignore.
-				if (!in_array( $filename , $ignore))
-				{
-
-					$output[$i] = array(
-						'file' => str_replace($path, '', $file),
-						'path' => $file,
-						'md5' => self::md5($file),
-						'chmod' => self::chmod($file),
-						'is_writable' => self::is_writable($file),
-					);
-				}
-
-				$i++;
+				$output[$i] = array(
+					'file' => str_replace($path, '', $file),
+					'path' => $file,
+					'md5' => self::md5($file),
+					'chmod' => self::chmod($file),
+					'is_writable' => self::is_writable($file),
+				);
 			}
 
-			set_transient( "umbrella_file_list-{$path}", $output, self::$time_to_cache );
+			$i++;
 		}
 
+	
 		return $output;
 
 	}

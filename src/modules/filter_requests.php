@@ -1,5 +1,6 @@
 <?php
-namespace Umbrella;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
 	/*
 	 * We don't want to hook this cause we want it to load as soon as posible 
