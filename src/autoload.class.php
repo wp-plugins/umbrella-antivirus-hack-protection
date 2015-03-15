@@ -71,11 +71,12 @@ class Autoload
 	 * @return void
 	*/
 	public function admin_menu() {
-		add_menu_page( 'DASHBOARD | WordPress Antivirus and Hack Protection', 'Umbrella', 'administrator', 'umbrella', array('Umbrella\controller', 'modules') , 'dashicons-shield', 3 ); 
-		add_submenu_page( 'umbrella', 'MODULES | WordPress Antivirus and Hack Protection', __('Modules', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella', array('Umbrella\controller', 'modules') ); 
+		add_menu_page( 'DASHBOARD | WordPress Antivirus and Hack Protection', 'Umbrella', 'administrator', 'umbrella', array('Umbrella\controller', 'dashboard') , 'dashicons-shield', 3 ); 
+		add_submenu_page( 'umbrella', 'Umbrella', __('Dashboard'), 'administrator', 'umbrella', array('Umbrella\controller', 'dashboard') ); 
 		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
-		add_submenu_page( 'umbrella', 'VULNERABILITIES | WordPress Antivirus and Hack Protection', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
-		add_submenu_page( 'umbrella', 'FILE SCANNER | WordPress Antivirus and Hack Protection', __('File Scanner', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
+		add_submenu_page( 'umbrella', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
+		add_submenu_page( 'umbrella', __('File Scanner', UMBRELLA__TEXTDOMAIN), __('File Scanner', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
+		add_submenu_page( 'umbrella', __('Logs', UMBRELLA__TEXTDOMAIN), __('Logs', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-logging', array('Umbrella\controller', 'logging') ); 
 	}
 
 	/**

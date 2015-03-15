@@ -12,9 +12,10 @@ class Controller
 
 		$data = array(
 		'navbars' => array(
-			array('umbrella', __('Modules', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella', __('Dashboard')),
 			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-scanner', __('File Scanner', UMBRELLA__TEXTDOMAIN) . ' (BETA)'),
+			array('umbrella-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
 		));
 
@@ -32,16 +33,47 @@ class Controller
 		self::make('footer', $data);
 	}	
 
+
 	/**
-	 * Modules
-	 * Controller for view Modules
+	 * Logging
+	 * Controller for Logging
 	 * @return void
 	*/
-	static public function modules() {
+	static public function logging() {
 
+		$data = array();
+
+		$data['logs'] = Log::read();
+		self::make('logging', $data);
+	}	
+
+	/**
+	 * Dashboard
+	 * Controller for view Dashboard
+	 * @return void
+	*/
+	static public function dashboard() {
+
+		// Get web server
+		$server_software = $_SERVER['SERVER_SOFTWARE'];
+		$server_software = explode(' ', $server_software);
+		$server_software = $server_software[0];
+
+		// Get charset
+		$server_protocol = $_SERVER['SERVER_PROTOCOL'];
+
+		// Domains on shared ip
+		$shared_domains = Scanner::reverse_ip();
+
+		$data['safebrowsing_status_code'] = Scanner::google_safe_browsing_code();
 		$data['available_options'] = Modules::valid_modules();
+		$data['ip'] = gethostbyname($_SERVER['SERVER_NAME']);
+		$data['software'] = $server_software;
+		$data['protocol'] = $server_protocol;
+		$data['shared_domains'] = $shared_domains;
+		
 		self::make('dashboard', $data);
-	}		
+	}
 
 	/**
 	 * Scanner
@@ -66,73 +98,15 @@ class Controller
 
 	}
 
-
 	/**
 	 * Vulnerabilities
 	 * Controller for view Vulnerabilities
 	 * @return void
 	*/
 	static public function vulnerabilities() {
-		$all_plugins = get_plugins();
-		$plugins = array();
-
-		foreach ($all_plugins as $key => $plugin)
-		{
-			unset($merge);
-			unset($json);
-
-			$slug = explode('/', $key);
-			$slug = reset($slug);
-
-			if ($slug == 'hello.php')
-				continue;
-
-			if ( false === ( $json = get_transient( "umbrella_vulndb_{$slug}" ) ) ) {
-				$json = wp_remote_get( "https://wpvulndb.com/api/v1/plugins/{$slug}" );
-				
-				if (!\is_wp_error($json))
-					set_transient( "umbrella_vulndb_{$slug}", $json, 300 );
-			}
-
-			if (!\is_wp_error($json))
-				$merge = array('vulndb' => $json);
-			else 
-				$merge['vulndb']['error']['code'] = '501';
-			
-		
-			$plugins[] = array_merge($plugin,$merge);
-		}
-
-		$all_themes = wp_get_themes();
-		$themes = array();
-
-		foreach ($all_themes as $slug => $theme)
-		{
-			unset($merge);
-			unset($json);
-			
-			if ( false === ( $json = get_transient( "umbrella_vulndb_theme_{$slug}" ) ) ) {
-				$json = wp_remote_get( "https://wpvulndb.com/api/v1/themes/{$slug}" );
-				
-				if (!\is_wp_error($json))
-					set_transient( "umbrella_vulndb_theme_{$slug}", $json, 300 );
-			}
-
-			$merge = array(
-				'Name' => $theme->get('Name'),
-				'Version' => $theme->get('Version'),
-				'Author' => $theme->get('Author'),
-			);
-
-			if (!\is_wp_error($json))
-				$merge['vulndb'] = $json;
-			else {
-				$merge['vulndb']['error']['code'] = '0';
-			}
-
-			$themes[] = $merge;
-
-		}
+	
+		$plugins = Scanner::vulndb_plugins();
+		$themes = Scanner::vulndb_themes();
 
 		$data['plugins'] = $plugins;
 		$data['themes'] = $themes;

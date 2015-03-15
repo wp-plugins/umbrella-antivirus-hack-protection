@@ -4,7 +4,7 @@ Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, 
 Keywords: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
 Requires at least: 3.0.1
 Tested up to: 4.1.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,9 +24,9 @@ More functions are planned and will be launched soon. Please look for updates :)
 * Scan WordPress for unknown files and file modifications by comparing md5 strings.
 
 = Planned features =
+* "Hjälp till att förbättra kvaliten genom att skicka anonyma data och användningsstatistik"
 * Scan WordPress folders and help user with permission issues.
 * Get notified by email when a new vulnerability is found.
-* Log all suspicious traffic for later analysation.
 
 == Installation ==
 
@@ -41,6 +41,17 @@ You will find 'Umbrella' menu in your WordPress admin panel.
 2. screenshot-2.png 
 
 == Changelog ==
+
+= 1.3 =
+*Release Date - 15 March, 2015*
+
+* Bugfix: Filter Requests blocked some post updates
+* Google Safe Browsing Checker
+* Hosting Status in Dashboard
+* Widgets in Dashboard
+* Log all suspicious traffic for later analysation
+* Updated language swedish (sv_SE)
+* Cload Flare checker
 
 = 1.2 =
 *Release Date - 7 March, 2015*

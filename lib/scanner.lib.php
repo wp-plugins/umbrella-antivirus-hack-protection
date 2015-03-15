@@ -21,6 +21,134 @@ class Scanner
             return false;
     }   
 
+    public static function google_safe_browsing_code()
+    {
+        /* Start request */
+        $response = wp_remote_get(
+            sprintf(
+                'https://sb-ssl.google.com/safebrowsing/api/lookup?client=191233873456-jfbgdmrlv1kqlmot3559mnu1rrglggfa.apps.googleusercontent.com&key=%s&appver=1.5.2&pver=3.1&url=%s',
+                'AIzaSyCaX3EIz6RzsF1MlDoJ8wJENsFg0v-dcXc',
+                urlencode( get_bloginfo('url') )
+            ),
+            array(
+                'sslverify' => false
+            )
+        );
+        return $response['response']['code'];
+    }
+
+    /**
+     * Vulnerabilities Scanner for Plugins
+     * This will scan installed plugins for vulnerabilities.
+     * @return array
+    */
+    public static function vulndb_plugins()
+    {
+        $all_plugins = get_plugins();
+
+        $plugins = array();
+
+        foreach ($all_plugins as $key => $plugin)
+        {
+            unset($merge);
+            unset($json);
+
+            $slug = explode('/', $key);
+            $slug = reset($slug);
+
+            if ($slug == 'hello.php')
+                continue;
+
+            if ( false === ( $json = get_transient( "umbrella_vulndb_{$slug}" ) ) ) {
+                $json = wp_remote_get( "https://wpvulndb.com/api/v1/plugins/{$slug}" );
+                
+                if (!\is_wp_error($json))
+                    set_transient( "umbrella_vulndb_{$slug}", $json, 300 );
+            }
+
+            if (!\is_wp_error($json))
+                $merge = array('vulndb' => $json);
+            else 
+                $merge['vulndb']['error']['code'] = '501';
+            
+        
+            $plugins[] = array_merge($plugin,$merge);
+        }
+
+        return $plugins;
+    }  
+
+    /**
+     * Plugins Errors
+     * Get errors from Vulndb for scanned plugins.
+     * @return array
+    */
+    public static function vulndb_plugins_errors() {
+        $plugins = Scanner::vulndb_plugins();
+
+        $errors_total = 0;
+
+        foreach ($plugins as $plugin)
+        {
+            $code = $plugin['vulndb']['response']['code'];
+
+            if ($code == 200)
+            {
+                $vulndbs = json_decode($plugin['vulndb']['body']);
+                if (is_object($vulndbs)) {
+                    foreach($vulndbs->plugin->vulnerabilities as $v) {
+                        $errors_total++;
+                    }
+                }
+            }
+        }
+
+        return array(
+            'errors_total' => $errors_total
+        );
+    }
+
+    /**
+     * Vulnerabilities Scanner for Themes
+     * This will scan installed themes for vulnerabilities.
+     * @return array
+    */
+    public static function vulndb_themes()
+    {
+        $all_themes = wp_get_themes();
+        $themes = array();
+
+        foreach ($all_themes as $slug => $theme)
+        {
+            unset($merge);
+            unset($json);
+            
+            if ( false === ( $json = get_transient( "umbrella_vulndb_theme_{$slug}" ) ) ) {
+                $json = wp_remote_get( "https://wpvulndb.com/api/v1/themes/{$slug}" );
+                
+                if (!\is_wp_error($json))
+                    set_transient( "umbrella_vulndb_theme_{$slug}", $json, 300 );
+            }
+
+            $merge = array(
+                'Name' => $theme->get('Name'),
+                'Version' => $theme->get('Version'),
+                'Author' => $theme->get('Author'),
+            );
+
+            if (!\is_wp_error($json))
+                $merge['vulndb'] = $json;
+            else {
+                $merge['vulndb']['error']['code'] = '0';
+            }
+
+            $themes[] = $merge;
+
+        }
+
+        return $themes;
+    }
+
     /**
      * Get Whitelist
      * Get whitelist for the current WP version.
@@ -29,6 +157,35 @@ class Scanner
     public function api_get_files()
     {
         die( json_encode( $this->list_core_files() ) );
+    }  
+
+    /**
+     * Reverse Ip
+     * Get all domains sharing the same ip
+     * @return json
+    */
+    static public function reverse_ip()
+    {
+        $ip = gethostbyname($_SERVER['SERVER_NAME']);
+        $url = 'http://api.hackertarget.com/reverseiplookup/?q=' . $ip;
+
+        $data = wp_remote_get($url);
+        $domains = explode("\n", $data['body']);
+        
+        return $domains;
+    }    
+
+    /**
+     * Has Cloudflare
+     * Return true if site is protected by Cloud Flare.
+     * @return bool
+    */
+    static public function has_cloudflare()
+    {
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"]))
+            return true;
+        else
+            false;
     }
 
     /**
@@ -111,6 +268,9 @@ class Scanner
             $url = "admin.php?page=umbrella-scanner&action=remove&file={$file}";
             $nonce_url =  wp_nonce_url( $url, "remove_{$file}" );
 
+            Log::write(__('File Scanner', UMBRELLA__TEXTDOMAIN), __("Unexpected file:", UMBRELLA__TEXTDOMAIN) . ' ' . $file );
+
+
             return array(
                 'error' => array('code' => '0010', 'msg' => 'Unexpected file'),
                 'file' => ABSPATH . $file,
@@ -129,6 +289,9 @@ class Scanner
         $file_data = file_get_contents( ABSPATH . $file );
 
         if (md5($file_data) != $original_md5)
+        {
+            Log::write(__('File Scanner', UMBRELLA__TEXTDOMAIN), __("Modified file:", UMBRELLA__TEXTDOMAIN) . ' ' . $file );
+            
             return array(
                 'error' => array('code' => '0020', 'msg' => 'Modified file'),
                 'file' => $file,
@@ -139,6 +302,8 @@ class Scanner
                     ),
                 )
             );
+        }
+           
     }
 
     /**
