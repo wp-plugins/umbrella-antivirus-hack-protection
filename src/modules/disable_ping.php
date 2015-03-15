@@ -28,6 +28,7 @@ add_filter('bloginfo_url', function($output, $property){
 // Just disable pingback.ping functionality while leaving XMLRPC intact?
 add_action('xmlrpc_call', function($method){
     if($method != 'pingback.ping') return;
+    Umbrella\Log::write('Disable Ping Module', 'Blocked pingback ping');
     wp_die(
         'Pingback functionality is disabled on this Blog.',
         'Pingback Disabled!',

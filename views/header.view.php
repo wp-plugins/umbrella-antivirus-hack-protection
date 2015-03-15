@@ -1,6 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
+	
 <div class="wrap about-wrap">
-
+	<img style="float: right;" src="https://cdn4.iconfinder.com/data/icons/whsr-january-flaticon-set/128/umbrella.png" alt="">
 	<h1>
 		Umbrella
 		<!-- a href="#" class="add-new-h2">More info @ umbrellaantivirus.io</a -->

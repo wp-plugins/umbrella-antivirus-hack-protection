@@ -26,8 +26,10 @@ add_filter('wp_authenticate_user', function($user, $password) {
 		$prefix = $_POST['umbrella_captcha_prefix'];
 		if(!$captcha_instance->check( $prefix, $_POST['umbrella_captcha_text'] ))
 		{
+			$user_login = $user->user_login;
 		  // if there is a mis-match
-		  $return_value = new WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
+			Umbrella\Log::write('Captcha Login', "Blocked login attempt with captcha error for user: {$user_login} ");
+			$return_value = new WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
 		}
 
 		// remember to remove the prefix

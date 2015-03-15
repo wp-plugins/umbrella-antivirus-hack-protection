@@ -1,7 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-
 	/*
 	 * We don't want to hook this cause we want it to load as soon as posible 
 	 * before all other plugins can make something bad.
@@ -19,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			// Return true if $value is found in $forbidden
 			if (is_array($value)) {
 				foreach($value as $val) {
-					if ( strpos($val, $forbidden) !== false ) 
+					if (!is_array($val) AND strpos($val, $forbidden) !== false ) 
 						return true;
 				}
 			} else {
@@ -42,7 +41,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		if (is_forbidden($value))
 		{
 			http_response_code(401);
-			die("Umbrella: 401 Forbidden Request.");
+			$error_msg = "Umbrella: 401 Forbidden Request:";
+			
+		    Umbrella\Log::write('Filter Requests', 'Blocked page load');
+
+			die($error_msg);
 		}
 	}
 
