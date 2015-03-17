@@ -37,9 +37,9 @@ You will find 'Umbrella' menu in your WordPress admin panel.
 
 == Screenshots ==
 
-1. dashboard.png
-2. file-scanner.png
-3. vulnerabilities.png 
+1. Dashboard
+2. Scan WordPress for unknown files and file modifications by comparing md5 strings.
+3. Vulnerabilities scanner for themes and plugins. 
 
 == Changelog ==
 
