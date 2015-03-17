@@ -37,8 +37,9 @@ You will find 'Umbrella' menu in your WordPress admin panel.
 
 == Screenshots ==
 
-1. screenshot-1.png 
-2. screenshot-2.png 
+1. dashboard.png
+2. file-scanner.png
+3. vulnerabilities.png 
 
 == Changelog ==
 
