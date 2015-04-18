@@ -12,10 +12,11 @@ class Controller
 
 		$data = array(
 		'navbars' => array(
-			array('umbrella', __('Dashboard')),
+			array('umbrella-site-protection', __('Dashboard')),
 			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
-			array('umbrella-scanner', __('File Scanner', UMBRELLA__TEXTDOMAIN) . ' (BETA)'),
+			array('umbrella-scanner', __('Core Scanner', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
 		));
 
@@ -33,7 +34,6 @@ class Controller
 		self::make('footer', $data);
 	}	
 
-
 	/**
 	 * Logging
 	 * Controller for Logging
@@ -43,8 +43,43 @@ class Controller
 
 		$data = array();
 
+		// Empty logs function
+		if (isset($_GET['do'])) {
+
+			switch ($_GET['do']) {
+
+				case 'empty-logs':
+					Log::empty_logs();
+					$data['refresh_page'] = 1;
+				break;
+
+				case 'disable-admin-notices':
+					add_option('umbrella_sp_disable_notices', 1);
+					$data['refresh_page'] = 1;
+				break;
+
+				case 'enable-admin-notices':
+					delete_option('umbrella_sp_disable_notices');
+					$data['refresh_page'] = 1;
+				break;
+			}
+		}
+
 		$data['logs'] = Log::read();
+
+		Log::reset_counter();
+
 		self::make('logging', $data);
+	}		
+
+	/**
+	 * Umbrella SP Network
+	 * Controller for Logging
+	 * @return void
+	*/
+	static public function sp_network() {
+		$data = array();
+		self::make('network', $data);
 	}	
 
 	/**
@@ -67,7 +102,7 @@ class Controller
 
 		$data['safebrowsing_status_code'] = Scanner::google_safe_browsing_code();
 		$data['available_options'] = Modules::valid_modules();
-		$data['ip'] = gethostbyname($_SERVER['SERVER_NAME']);
+		$data['ip'] = $_SERVER['HTTP_HOST'];
 		$data['software'] = $server_software;
 		$data['protocol'] = $server_protocol;
 		$data['shared_domains'] = $shared_domains;
@@ -91,9 +126,32 @@ class Controller
 		// Show error page if no data file found.
 		if (!file_exists($data_file))
 			return self::make('scanner_no_md5_list');
-		
-		$data = array();
+	
+		// Get data if cached.
+		$fileslist = array();
+		if (null !== get_transient('umbrella-file-scan'))
+			$fileslist = get_transient('umbrella-file-scan');
 
+		// Remove temporary ignored files from files list.
+     	$ignored_files = array();
+        $ignored_files = get_option('umbrella-sp-ignored-files');
+
+        // If option is set, unserialize it into an array.
+        if (!empty($ignored_files)) 
+            $ignored_files = unserialize($ignored_files);
+
+        if (is_array($fileslist)) {
+
+	    	foreach ($fileslist as $index => $file)
+	        {
+	        	if (isset($ignored_files[$file['file']]) 
+	        		AND isset($file['response']['md5']) 
+	        		AND $ignored_files[$file['file']] == $file['response']['md5'])
+	        			unset($fileslist[$index]);
+	        } 
+		}
+
+        $data['fileslist'] = $fileslist;
 		self::make('scanner', $data);
 
 	}
@@ -135,6 +193,10 @@ class Controller
 	 * @return void
 	*/
 	static public function make( $view = '', $data = array() ) {
+
+		wp_enqueue_style('umbrella-filescanner-css', UMBRELLA__PLUGIN_URL . 'css/layout.css');
+		wp_enqueue_script('umbrella-js', UMBRELLA__PLUGIN_URL . 'js/siteprotection.js');
+
 
 		$path_to_file = UMBRELLA__PLUGIN_DIR . 'views/' . $view . '.view.php';
 

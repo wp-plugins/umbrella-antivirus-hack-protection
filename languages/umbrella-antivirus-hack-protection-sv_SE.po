@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Umbrella v1.3\n"
+"Project-Id-Version: Umbrella Antivirus & Hack protection. v1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-03-15 18:59:40+0000\n"
+"PO-Revision-Date: 2015-04-11 21:49:50+0000\n"
 "Last-Translator: rasmus <rk@youngmedia.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,36 +19,6 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
-
-#. translators: plugin header field 'Name'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "Umbrella"
-msgstr ""
-
-#. translators: plugin header field 'PluginURI'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "http://www.rasmuskjellberg.se/wordpress-plugins/umbrella/"
-msgstr ""
-
-#. translators: plugin header field 'Description'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "WordPress Antivirus and Hack protection. More functions are planned and will be launched soon. Look for an update :)"
-msgstr ""
-
-#. translators: plugin header field 'Author'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "Rasmus Kjellberg"
-msgstr ""
-
-#. translators: plugin header field 'AuthorURI'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "http://www.rasmuskjellberg.se/"
-msgstr ""
 
 #: views/permissions.view.php:5
 #@ umbrella-antivirus-hack-protection
@@ -74,36 +44,24 @@ msgid "Recommended"
 msgstr "Rekommenderad"
 
 #: src/autoload.class.php:78
-#: src/controller.class.php:17
-#: views/scanner.view.php:4
 #@ umbrella-antivirus-hack-protection
 msgid "File Scanner"
 msgstr "Genomsök filer"
 
-#: views/scanner.view.php:7
-#@ umbrella-antivirus-hack-protection
-msgid "This will scan your core folders for unexpected files or modifications."
-msgstr "Låt oss genomsöka din WordPress installation efter fel, modifieringar och ouppskattade filer."
-
-#: views/scanner.view.php:11
-#@ umbrella-antivirus-hack-protection
-msgid "Begin scanning"
-msgstr "Starta genomsökning"
-
-#: views/scanner.view.php:22
-#: views/scanner.view.php:30
+#: views/scanner.view.php:13
+#: views/scanner.view.php:21
 #@ umbrella-antivirus-hack-protection
 msgid "Error"
 msgstr "Felmeddelande"
 
-#: views/scanner.view.php:23
-#: views/scanner.view.php:31
+#: views/scanner.view.php:14
+#: views/scanner.view.php:22
 #@ umbrella-antivirus-hack-protection
 msgid "File path"
 msgstr "Sökväg"
 
-#: views/scanner.view.php:24
-#: views/scanner.view.php:32
+#: views/scanner.view.php:15
+#: views/scanner.view.php:23
 #@ umbrella-antivirus-hack-protection
 msgid "Action"
 msgstr "Hantera"
@@ -194,7 +152,7 @@ msgstr "Temats namn"
 msgid "Theme Version"
 msgstr "Temats version"
 
-#: views/dashboard.view.php:47
+#: views/dashboard.view.php:62
 #@ umbrella-antivirus-hack-protection
 msgid "Modules"
 msgstr "Moduler"
@@ -225,44 +183,28 @@ msgstr "Blockera alla misstänkta förfrågningar genom query strings."
 msgid "Add CAPTCHA to login screen for a more secure login. <span style=\"color:red\">This module requires the <a target=\"_blank\" href=\"plugin-install.php?tab=search&s=Really%20Simple%20CAPTCHA\">Really Simple CAPTCHA</a> plugin.</span>"
 msgstr "Öka säkerheten och skyddet för WordPress med CAPTCHA-inloggning. <span style=\"color:red\">Den här modulen kräver att  <a target=\"_blank\" href=\"plugin-install.php?tab=search&s=Really%20Simple%20CAPTCHA\">Really Simple CAPTCHA</a> är installerat.</span>"
 
-#: lib/scanner.lib.php:235
-#: lib/scanner.lib.php:253
-#@ umbrella-antivirus-hack-protection
-msgid "Actions not available in the BETA version"
-msgstr "Hantering ej möjlig i BETA-version"
-
-#: views/header.view.php:10
-#@ umbrella-antivirus-hack-protection
-msgid ""
-"Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. \n"
-"More functions are planned and will be launched with the next update."
-msgstr "Umbrella skyddar din WordPress hemsida med plugin och teman mot kända säkerhetshål, virus och attacker. Mer funktioner är planerade och släpps med nästa uppdatering."
-
-#: views/dashboard.view.php:66
-#: views/dashboard.view.php:74
+#: views/dashboard.view.php:81
+#: views/dashboard.view.php:89
+#: views/logging.view.php:12
+#: views/logging.view.php:20
 #@ umbrella-antivirus-hack-protection
 msgid "Module"
 msgstr "Modul"
 
-#: views/dashboard.view.php:67
-#: views/dashboard.view.php:75
+#: views/dashboard.view.php:82
+#: views/dashboard.view.php:90
 #@ umbrella-antivirus-hack-protection
 msgid "Description"
 msgstr "Beskrivning"
 
-#. translators: plugin header field 'Version'
-#: init.php:0
-#@ umbrella-antivirus-hack-protection
-msgid "1.3"
-msgstr ""
-
-#: src/autoload.class.php:75
 #: src/controller.class.php:15
 #@ default
 msgid "Dashboard"
 msgstr ""
 
-#: src/controller.class.php:18
+#: src/autoload.class.php:79
+#: src/controller.class.php:19
+#: views/logging.view.php:5
 #@ umbrella-antivirus-hack-protection
 msgid "Logs"
 msgstr "Loggar"
@@ -271,11 +213,6 @@ msgstr "Loggar"
 #@ umbrella-antivirus-hack-protection
 msgid "Hosting Status"
 msgstr "Hosting Status"
-
-#: views/dashboard.view.php:11
-#@ umbrella-antivirus-hack-protection
-msgid "Server IP"
-msgstr "Server IP"
 
 #: views/dashboard.view.php:15
 #@ umbrella-antivirus-hack-protection
@@ -302,11 +239,117 @@ msgstr "Google Säker Webbsökning"
 msgid "Status code"
 msgstr "Statuskod"
 
-#: views/dashboard.view.php:49
+#: views/dashboard.view.php:64
 #@ umbrella-antivirus-hack-protection
 msgid ""
 "This plugin is doing nothing by default, and that's because we want you to know whats happening behind the scenes. \n"
 "\t\tWith that said, please choose wich modules you want to use with Umbrella. Even if nothing is loaded by default, \n"
 "\t\twe recommend you to activate them all for best protection. Cheers =)"
 msgstr "Det här pluginet gör inget av sig självt utan användarens vetskap. Det är för att vi tycker att användaren själv ska ha full kontroll över sin webbplats. Välj vilka moduler & funktioner du vill aktivera. Även om inga moduler laddas automatiskt rekommenderar vi att aktivera alla för bäst säkerhet."
+
+#. translators: plugin header field 'Name'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "Umbrella Antivirus & Hack protection."
+msgstr ""
+
+#. translators: plugin header field 'PluginURI'
+#. translators: plugin header field 'AuthorURI'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "http://www.umbrellaplugins.com"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "WordPress Antivirus and Hack protection. With features as vulnerability Scanner, file Scanner, hide versions, disable pings, captcha login and more."
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "Umbrella Plugins"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: init.php:0
+#@ umbrella-antivirus-hack-protection
+msgid "1.4"
+msgstr ""
+
+#: lib/scanner.lib.php:285
+#: lib/scanner.lib.php:308
+#@ umbrella-antivirus-hack-protection
+msgid "Ignore"
+msgstr "Ignorera"
+
+#: src/autoload.class.php:75
+#@ umbrella-antivirus-hack-protection
+msgid "Umbrella AntiVirus"
+msgstr ""
+
+#: src/autoload.class.php:78
+#: src/controller.class.php:17
+#: views/scanner.view.php:4
+#@ umbrella-antivirus-hack-protection
+msgid "Core Scanner"
+msgstr ""
+
+#: views/dashboard.view.php:11
+#@ umbrella-antivirus-hack-protection
+msgid "Server Domain"
+msgstr "Serverdomän"
+
+#: views/dashboard.view.php:43
+#@ umbrella-antivirus-hack-protection
+msgid "CDN &amp; DDOS-Protection"
+msgstr "CDN &amp; DDOS-Skydd"
+
+#: views/dashboard.view.php:49
+#@ umbrella-antivirus-hack-protection
+msgid "Protected by CloudFlare"
+msgstr "Skyddat av CloudFlare"
+
+#: views/dashboard.view.php:51
+#@ umbrella-antivirus-hack-protection
+msgid "Set up with CloudFlare.com"
+msgstr "Konfigurera med CloudFlare.com"
+
+#: views/dashboard.view.php:123
+#@ default
+msgid "Update"
+msgstr ""
+
+#: views/header.view.php:10
+#@ umbrella-antivirus-hack-protection
+msgid "Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. Read more at "
+msgstr ""
+
+#: views/logging.view.php:11
+#: views/logging.view.php:19
+#@ umbrella-antivirus-hack-protection
+msgid "Time"
+msgstr "Tid"
+
+#: views/logging.view.php:13
+#: views/logging.view.php:21
+#@ umbrella-antivirus-hack-protection
+msgid "Message"
+msgstr "Meddelande"
+
+#: views/scanner.view.php:7
+#@ umbrella-antivirus-hack-protection
+msgid "This will scanner will search trough your core folders for unexpected files or modifications in core files. This scanner will not include the wp-content directory or your wp-config.php file."
+msgstr ""
+
+#: views/scanner.view.php:31
+#@ umbrella-antivirus-hack-protection
+msgid "Start file scanner"
+msgstr "Starta filscannare"
+
+#: src/autoload.class.php:74
+#@ umbrella-antivirus-hack-protection
+msgid "Site Protection"
+msgstr "Webbplatsskydd"
 

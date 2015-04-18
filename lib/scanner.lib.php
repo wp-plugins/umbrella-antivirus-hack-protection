@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Scanner
 {
+
     /**
      * Get Whitelist
      * Get whitelist for the current WP version.
@@ -14,9 +15,23 @@ class Scanner
         $locale = get_locale();
         $data_file = UMBRELLA__PLUGIN_DIR . "data/wordpress-{$this->wp_version()}.db";
 
+        $ignored_files = array();
+        $ignored_files = get_option('umbrella-sp-ignored-files');
+
+        // If option is set, unserialize it into an array.
+        if (!empty($ignored_files)) 
+            $ignored_files = unserialize($ignored_files);
+
         // Return whitelist as array if found for current WP version.
-        if (file_exists($data_file))
-            return parse_ini_file($data_file, true);
+        if (file_exists($data_file)) {
+            $data = parse_ini_file($data_file, true);
+            
+            if(is_array($ignored_files))
+                return array_merge($data, $ignored_files);
+            else
+                return $data;
+        }
+
         else
             return false;
     }   
@@ -157,7 +172,7 @@ class Scanner
     public function api_get_files()
     {
         die( json_encode( $this->list_core_files() ) );
-    }  
+    }       
 
     /**
      * Reverse Ip
@@ -166,11 +181,15 @@ class Scanner
     */
     static public function reverse_ip()
     {
-        $ip = gethostbyname($_SERVER['SERVER_NAME']);
+        $ip = $_SERVER['HTTP_HOST'];
         $url = 'http://api.hackertarget.com/reverseiplookup/?q=' . $ip;
 
         $data = wp_remote_get($url);
-        $domains = explode("\n", $data['body']);
+
+        if (is_array($data))
+            $domains = explode("\n", $data['body']);
+        else 
+            $domains = array();
         
         return $domains;
     }    
@@ -262,43 +281,44 @@ class Scanner
     {
         $whitelist = $this->whitelist();
 
+        $file_data = file_get_contents( ABSPATH . $file );
+
         // File is unknown (not included in core)
         if (!isset($whitelist[$file])) {
 
-            $url = "admin.php?page=umbrella-scanner&action=remove&file={$file}";
-            $nonce_url =  wp_nonce_url( $url, "remove_{$file}" );
-
-            Log::write(__('File Scanner', UMBRELLA__TEXTDOMAIN), __("Unexpected file:", UMBRELLA__TEXTDOMAIN) . ' ' . $file );
-
+            $url = "admin.php?page=umbrella-scanner&action=ignore&file={$file}";
+            $nonce_url =  wp_nonce_url( $url, "ignore_{$file}" );
 
             return array(
                 'error' => array('code' => '0010', 'msg' => 'Unexpected file'),
                 'file' => ABSPATH . $file,
+                'md5' => md5($file_data),
                 'buttons' => array(
                     array(
-                        'label' => __('Actions not available in the BETA version', UMBRELLA__TEXTDOMAIN),
-                        'href' => '#'
+                        'label' => __('Ignore', UMBRELLA__TEXTDOMAIN),
+                        'href' => $nonce_url
                     ),
                 )
             );
 
         }
-
+        
         $original_md5 = $whitelist[$file];
-       
-        $file_data = file_get_contents( ABSPATH . $file );
 
         if (md5($file_data) != $original_md5)
         {
-            Log::write(__('File Scanner', UMBRELLA__TEXTDOMAIN), __("Modified file:", UMBRELLA__TEXTDOMAIN) . ' ' . $file );
+
+            $url = "admin.php?page=umbrella-scanner&action=ignore&file={$file}";
+            $nonce_url =  wp_nonce_url( $url, "ignore_{$file}" );
             
             return array(
                 'error' => array('code' => '0020', 'msg' => 'Modified file'),
                 'file' => $file,
+                'md5' => md5($file_data),
                 'buttons' => array(
                     array(
-                        'label' => __('Actions not available in the BETA version', UMBRELLA__TEXTDOMAIN),
-                        'href' => '#'
+                        'label' => __('Ignore', UMBRELLA__TEXTDOMAIN),
+                        'href' => $nonce_url
                     ),
                 )
             );
@@ -340,7 +360,23 @@ class Scanner
     public function ignore_file($file)
     {
         $file = esc_attr($file);
-        echo 'Ignore file: ' . $file;
+        $ignored_files = get_option('umbrella-sp-ignored-files');
+
+        // If option is set, unserialize it into an array.
+        if (!empty($ignored_files)) 
+            $ignored_files = unserialize($ignored_files);
+
+        // Read file data.
+        $file_data = file_get_contents(ABSPATH . $file);
+
+        // Get md5 checksum.
+        $md5 = md5($file_data);
+
+        // Add string and md5.
+        $ignored_files[$file] = $md5;
+
+        // Add new file top option cache.
+        update_option('umbrella-sp-ignored-files', serialize($ignored_files));
     }    
 
     /**
@@ -399,6 +435,25 @@ class Scanner
 
 } 
 
+
+add_action( 'wp_ajax_umbrella_filescan', function() {
+    $scanner = new Scanner();
+    $files = $scanner->list_core_files();
+
+    $output = array();
+    foreach ($files as $file)
+    {
+        if ($scanner->check_file($file))
+            $output[] = array('file' => $file, 'response' => $scanner->check_file($file));
+    }
+
+    // Cache scan for 30 minutes.
+    set_transient('umbrella-file-scan', $output, 1800);
+
+    die(json_encode($output));
+} );
+
+
 add_action('admin_init', function() {
 
     if (current_user_can('administrator')
@@ -411,7 +466,9 @@ add_action('admin_init', function() {
 
             switch($_GET['action'])
             {
-                case 'remove'; $scanner->remove_file($_GET['file']); break;
+                case 'remove'; 
+                    $scanner->remove_file($_GET['file']); 
+                break;
                 case 'ignore'; $scanner->ignore_file($_GET['file']); break;
                 case 'reinstall'; $scanner->reinstall_file($_GET['file']); break;
                 case 'compare'; $scanner->compare_file($_GET['file']); break;

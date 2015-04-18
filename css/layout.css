@@ -1,0 +1,102 @@
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900);
+
+#wpcontent, #wpfooter {
+	background: #ecf0f1 !important;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+}
+
+#wpbody-content .error {
+	display: none;
+}
+
+.spacer {
+	height: 30px;
+}
+
+#umbrella-site-protection {
+	margin: 0px;
+	margin-top: 25px;
+	width: 100%;
+	padding: 25px;
+	box-sizing: border-box;
+}
+
+#umbrella-site-protection .big-input {
+	margin: 0px;
+	font-size: 14px;
+	padding: 5px 5px;
+	width: 400px;
+	margin-bottom: 15px;
+}
+
+#umbrella-site-protection p {
+	font-size: 14px;
+}
+
+#umbrella-site-protection #filescanner {
+	display: none;
+}
+
+#umbrella-site-protection p#no-errors-found
+{
+	color: #27ae60 !important;
+	font-size: 20px;
+	display: none;
+}
+
+
+#umbrella-site-protection h2,h3,h4 {
+	color: #d52349 !important;
+}
+
+h1#umbrella-title {
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #34495e;
+	text-align: center;
+	font-size: 48px;
+	padding: 0px;
+	letter-spacing: -2px;
+	font-weight: 900;
+	margin-top: 50px;
+}
+
+h1#umbrella-title span {
+	color:#121212
+	font-weight: 300;
+	font-size: 18px;
+	letter-spacing: 0px;
+	vertical-align: middle;
+}
+
+#umbrella-nav > ul {
+	text-align: center;
+	margin: 0px;
+}
+
+#umbrella-nav > ul > li {
+  display: inline-block;
+  margin: 0 10px 0 10px;
+
+}
+
+#umbrella-nav > ul > li > a {
+  display: inline-block;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  text-decoration: none;
+  color: #565656;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+#umbrella-nav > ul > li.current > a {
+  background: #d52349;
+  color: #fff !important;
+  font-weight: 400;
+}
+
+#umbrella-site-protection:before, #umbrella-site-protection:after {
+  box-sizing: inherit;
+}

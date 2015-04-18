@@ -1,24 +1,23 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
-	
-<div class="wrap about-wrap">
-	<img style="float: right;" src="https://cdn4.iconfinder.com/data/icons/whsr-january-flaticon-set/128/umbrella.png" alt="">
-	<h1>
-		Umbrella
-		<!-- a href="#" class="add-new-h2">More info @ umbrellaantivirus.io</a -->
-	</h1>
+<div class="wrap">
+<h1 id="umbrella-title">
+	Site Protection
+	<!-- a href="#" class="add-new-h2">More info @ umbrellaantivirus.io</a -->
+</h1>
+<div id="umbrella-site-protection">
 
-	<div class="about-text">
-		<?php _e('Umbrella helps you protect your WordPress site and checks your plugin and themes for known vulnerabilities. 
-More functions are planned and will be launched with the next update.', UMBRELLA__TEXTDOMAIN); ?>
-	</div>
+	<nav id="umbrella-nav">
+		<ul>
+			<?php foreach($navbars as $nav): ?>
+				<li class="<?php
+					if (isset($_GET['page']) AND $_GET['page'] == $nav[0])
+						echo 'current'
+				?>"><a href="admin.php?page=<?php echo $nav[0]; ?>"><?php echo $nav[1]; ?></a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</nav>
 
-	<h2 class="nav-tab-wrapper">
-	
-		<?php foreach($navbars as $nav): ?>
-			<a href="admin.php?page=<?php echo $nav[0]; ?>" class="nav-tab <?php
-				if (isset($_GET['page']) AND $_GET['page'] == $nav[0])
-					echo 'nav-tab-active'
-			?>"><?php echo $nav[1]; ?></a>
-		<?php endforeach; ?>
+	<div class="spacer"></div>
 
-	</h2>
+	<?php do_action('admin_notices'); ?>
