@@ -12,7 +12,7 @@ if (UMBRELLA__LATEST_WP_VERSION < $wp_version):
 	<?php _e('will be available within a few hours.', UMBRELLA__TEXTDOMAIN); ?>
 	</p><p>
 	<?php _e('We guess your\'e an early bird and just updated to the latest WordPress version.',UMBRELLA__TEXTDOMAIN); ?>
-	<?php _e('Our database is not updated yet, but don\'t worry cause if you just made an update, you\'re core-files must be fine.',UMBRELLA__TEXTDOMAIN); ?>
+	<?php _e('Our database is not updated yet, but don\'t worry cause if you just made an update, you\'re core-files should be fine.',UMBRELLA__TEXTDOMAIN); ?>
 	</p><p>
 	<strong style="color:red"><?php _e('Please also make sure that Umbrella is running the latest version', UMBRELLA__TEXTDOMAIN); ?></strong>
 <?php

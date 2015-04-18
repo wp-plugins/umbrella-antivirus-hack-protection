@@ -1,10 +1,10 @@
-=== Umbrella ===
+=== Site Protection by Umbrella Plugins ===
 Contributors: rkjellberg
 Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
-Keywords: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
-Requires at least: 3.0.1
+Keywords: antivirus, vulnerabilities, core scanner, protection, firewall, vulnerability Scanner, File Scanner, Hide Versions, Disable Pings, Captcha Login number, captcha, captcha login, secure login
+Requires at least: 4.1.1
 Tested up to: 4.1.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,26 +22,43 @@ More functions are planned and will be launched soon. Please look for updates :)
 * Hide version numbers in your front-end source code for WordPress-core and all of your plugins. 
 * Completely turn off trackbacks & pingbacks to your site.
 * Scan WordPress for unknown files and file modifications by comparing md5 strings.
+* Disable Themes & Plugins-editor.
+* CloudFlare Support
 
 = Planned features =
-* "Hjälp till att förbättra kvaliten genom att skicka anonyma data och användningsstatistik"
-* Scan WordPress folders and help user with permission issues.
-* Get notified by email when a new vulnerability is found.
+* Scan files and folders for permission issues.
+* Umbrella Network: Mange all of your sites from one place.
+* In-app feedback and live chat support.
+* More CloudFlare options trough CloudFlare API.
 
 == Installation ==
 
 1. Upload the entire `umbrella-antivirus-hack-protection` folder to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-You will find 'Umbrella' menu in your WordPress admin panel.
+You will find the 'Site Protection' tab in your WordPress admin panel.
 
 == Screenshots ==
 
-1. Dashboard
-2. Scan WordPress for unknown files and file modifications by comparing md5 strings.
-3. Vulnerabilities scanner for themes and plugins. 
+1. screenshot-1.png 
+2. screenshot-2.png 
+3. screenshot-3.png 
+4. screenshot-4.png 
 
 == Changelog ==
+
+= 1.4 = 
+*Release Date - 18 April, 2015*
+
+* New layout for option pages.
+* Plugin changed name to Umbrella Site Protection and authors updated.
+* File scanner changed name to core scanner and is now much faster than before.
+* New features: Disable Themes & Plugins-editor.
+* More patterns added to the Filter Request module for better security..
+* It's now possible to ignore trustable files in core scanner.
+* Included Really Simple Captcha plugin as library.
+* Show visitors ip address in log messages.
+* Admin Notices on new log entries.
 
 = 1.3 =
 *Release Date - 15 March, 2015*
@@ -65,4 +82,8 @@ You will find 'Umbrella' menu in your WordPress admin panel.
 *Release Date - 1 March, 2015*
 
 * Vulnerabilities scanner for themes and plugins. 
-* Add CAPTCHA to login screen for a more secure login. 
+* Add CAPTCHA to login screen for a more secure login.
+
+== Frequently Asked Questions ==
+= Does this protect my site from hackers? =
+Yes. 

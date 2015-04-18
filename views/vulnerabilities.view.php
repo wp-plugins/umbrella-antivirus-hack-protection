@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Umbrella\Controller::header(); ?>
 
-<h4><?php _e('Plugin Vulnerabilities', UMBRELLA__TEXTDOMAIN); ?></h4>
+<h3><?php _e('Plugin Vulnerabilities', UMBRELLA__TEXTDOMAIN); ?></h3>
 <p>
 </p>
 <table class="wp-list-table widefat plugins">
@@ -65,7 +65,7 @@ Umbrella\Controller::header(); ?>
 	</tbody>
 </table>
 
-<h4><?php _e('Theme Vulnerabilities', UMBRELLA__TEXTDOMAIN); ?></h4>
+<h3><?php _e('Theme Vulnerabilities', UMBRELLA__TEXTDOMAIN); ?></h3>
 <p>
 </p>
 <table class="wp-list-table widefat plugins">

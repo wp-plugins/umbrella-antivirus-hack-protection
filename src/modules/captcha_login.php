@@ -9,7 +9,7 @@ add_action('login_form', function (){
     $word = $captcha_instance->generate_random_word();
     $prefix = mt_rand();
     $captchaimg = $captcha_instance->generate_image( $prefix, $word );
-    $imgpath = plugins_url().'/really-simple-captcha/tmp/'.$captchaimg;
+    $imgpath = UMBRELLA__PLUGIN_TMPURL . $captchaimg;
 
     echo "<input type='hidden' name='umbrella_captcha_prefix' value='{$prefix}'/>";
     echo "<img src='{$imgpath}' style='float: right;position: absolute;margin-left: 190px;margin-top: 11px;' /><input name='umbrella_captcha_text' type='text' />";
