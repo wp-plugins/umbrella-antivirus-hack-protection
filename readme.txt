@@ -8,7 +8,7 @@ Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Antivirus and Hack protection.
+WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, file Scanner, hide versions, disable pings, captcha login and more.
 
 == Description ==
 
