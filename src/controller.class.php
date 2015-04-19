@@ -89,6 +89,23 @@ class Controller
 	*/
 	static public function dashboard() {
 
+		// Button functions
+		if (isset($_GET['do'])) {
+
+			switch ($_GET['do']) {
+
+				case 'disable-automatic-updates':
+					add_option('umbrella_sp_disable_auto_updates', 1);
+					$data['refresh_page'] = 1;
+				break;
+
+				case 'enable-automatic-updates':
+					delete_option('umbrella_sp_disable_auto_updates');
+					$data['refresh_page'] = 1;
+				break;
+			}
+		}
+
 		// Get web server
 		$server_software = $_SERVER['SERVER_SOFTWARE'];
 		$server_software = explode(' ', $server_software);
@@ -104,7 +121,6 @@ class Controller
 		$data['available_options'] = Modules::valid_modules();
 		$data['ip'] = $_SERVER['HTTP_HOST'];
 		$data['software'] = $server_software;
-		$data['protocol'] = $server_protocol;
 		$data['shared_domains'] = $shared_domains;
 		
 		self::make('dashboard', $data);

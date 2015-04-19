@@ -1,10 +1,8 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap">
-<h1 id="umbrella-title">
-	Site Protection
-	<!-- a href="#" class="add-new-h2">More info @ umbrellaantivirus.io</a -->
-</h1>
 <div id="umbrella-site-protection">
+
+	<img id="header-img" src="<?php echo UMBRELLA__PLUGIN_URL; ?>/img/header.png" alt="">
 
 	<nav id="umbrella-nav">
 		<ul>

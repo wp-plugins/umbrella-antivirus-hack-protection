@@ -23,6 +23,7 @@ class Autoload
 	 * @return void
 	*/
 	public function autoload() {
+
 		// Get all hooks from protected var $autoload;
 		$hooks = $this->autoload;
 
@@ -32,11 +33,15 @@ class Autoload
 				add_action($hook, array($this, $hook));
 		}
 
+		// Add filters to plugin row in plugins list.
 		add_filter('plugin_row_meta', array( &$this, 'plugin_row_meta' ), 10, 2);
 		add_filter('plugin_action_links_' . UMBRELLA__TEXTDOMAIN . '/init.php', array( &$this, 'action_links' ) );
 
 		// Load all activated modules.
 		$this->load_modules();
+
+		// Check for updates of this plugin
+		$this->check_for_updates();
 	}
 
 	/**
@@ -46,6 +51,69 @@ class Autoload
 	*/
 	public function init() {
 		
+	}	
+
+	/**
+	 * Latest Version
+	 * Get the latest available version number of this plugin.
+	 * @return void
+	*/
+	public function latest_version() {
+
+		$updates = get_site_transient('update_plugins');
+
+		if (isset($updates->response['umbrella-antivirus-hack-protection/init.php']))
+		{
+			$latest_version = $updates->response['umbrella-antivirus-hack-protection/init.php']->new_version;
+		}
+		else 
+			$latest_version = UMBRELLA__VERSION;
+
+		return $latest_version;
+	}			
+
+	/**
+	 * Check for updates
+	 * Check for updates and update if found.
+	 * @since 1.4.1
+	 * @return void
+	*/
+	public function check_for_updates() {
+
+		if (UMBRELLA__VERSION < $this->latest_version()) {
+			define('UMBRELLA_SP_UPDATE_AVAILABLE', $this->latest_version());
+		}
+
+		// Only update if automatic updates are not disabled.
+		if (get_option('umbrella_sp_disable_auto_updates') != 1) {
+
+			// Check for plugin updates.
+			add_filter('auto_update_plugin', array(
+	            $this,
+	            'filter_auto_update_plugin'
+	        ), 10, 2);
+		}
+	}			
+
+	/**
+	 * Auto Update Plugin
+	 * auto_update_plugin filter
+	 * @since 1.4.1
+	 * @return bool
+	*/
+	public function filter_auto_update_plugin( $update, $item ) {
+
+		// Array of plugin slugs to always auto-update
+	    $plugins = array ( 
+	        'umbrella-antivirus-hack-protection'
+	    );
+
+	    if ( in_array( $item->slug, $plugins ) ) {
+	        return true; // Always update plugins in this array
+	    } else {
+	        return $update; // Else, use the normal API response to decide whether to update or not
+	    }
+
 	}		
 
 	/**
@@ -93,21 +161,39 @@ class Autoload
 	*/
 	public function admin_notices() {
 
-
 		$logs = Log::counter();
 
+		// Version updates
+		if (defined('UMBRELLA_SP_UPDATE_AVAILABLE')):
+
+			if (!isset($_GET['action'])) {
+				$update_file = 'umbrella-antivirus-hack-protection/init.php';
+				$url = wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=' . $update_file), 'upgrade-plugin_' . $update_file);
+		?>
+	 	<div class="error umbrella">
+	     	<a href="<?php echo esc_url($url); ?>" class="button button-primary" style="float:right;margin-top: 3px;"><?php _e( 'Update Now', UMBRELLA__TEXTDOMAIN ); ?></a>
+	        <p>
+	        	<a href="admin.php?page=umbrella-site-protection"><strong><?php _e( 'Site Protection', UMBRELLA__TEXTDOMAIN ); ?></strong></a>: 
+	        	<?php printf( __( 'A new version of Umbrella Site Protection is available: <strong>%s</strong>. Please update now for better protection.', UMBRELLA__TEXTDOMAIN ), UMBRELLA_SP_UPDATE_AVAILABLE); ?>
+	    	</p>
+	    </div>
+		<?php 
+			}
+		endif;
+
+		// Log entries
 		if ($logs > 0 AND get_option('umbrella_sp_disable_notices') != 1):
-	?>
-    <div class="error umbrella">
-    	<a href="?page=umbrella-logging&amp;do=disable-admin-notices" class="button" style="float:right;margin-top: 3px;margin-left: 5px;"><?php _e( 'Disable log notices', UMBRELLA__TEXTDOMAIN ); ?></a>
-     	<a href="admin.php?page=umbrella-logging" class="button button-primary" style="float:right;margin-top: 3px;"><?php _e( 'View log', UMBRELLA__TEXTDOMAIN ); ?></a>
-        <p>
-        	<a href="admin.php?page=umbrella-site-protection"><strong><?php _e( 'Site Protection', UMBRELLA__TEXTDOMAIN ); ?></strong></a>: 
-        	<?php printf( __( 'You have <strong>%d</strong> new log message(s).', UMBRELLA__TEXTDOMAIN ), $logs); ?>
-    	</p>
-    </div>
-    <?php
-    	endif;
+		?>
+	    <div class="error umbrella">
+	    	<a href="?page=umbrella-logging&amp;do=disable-admin-notices" class="button" style="float:right;margin-top: 3px;margin-left: 5px;"><?php _e( 'Disable log notices', UMBRELLA__TEXTDOMAIN ); ?></a>
+	     	<a href="admin.php?page=umbrella-logging" class="button button-primary" style="float:right;margin-top: 3px;"><?php _e( 'View log', UMBRELLA__TEXTDOMAIN ); ?></a>
+	        <p>
+	        	<a href="admin.php?page=umbrella-site-protection"><strong><?php _e( 'Site Protection', UMBRELLA__TEXTDOMAIN ); ?></strong></a>: 
+	        	<?php printf( __( 'You have <strong>%d</strong> new log message(s).', UMBRELLA__TEXTDOMAIN ), $logs); ?>
+	    	</p>
+	    </div>
+	    <?php
+		endif;
 	}
 
 	/**

@@ -1,6 +1,12 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header(); ?>
+Umbrella\Controller::header();
+if (isset($refresh_page)): 
+?>
+<script type="text/javascript">
+	location.href='admin.php?page=umbrella-site-protection';
+</script>
+<?php endif; ?>
 
 <div style="width: 25%;float: right;">
 
@@ -15,14 +21,14 @@ Umbrella\Controller::header(); ?>
 			<th style="font-weight:bold;"><?php _e('Server Software', UMBRELLA__TEXTDOMAIN); ?></th>
 			<td><?php echo $software; ?></td>
 		</tr>
-		<tr>
-			<th style="font-weight:bold;"><?php _e('Server Protocol', UMBRELLA__TEXTDOMAIN); ?></th>
-			<td><?php echo $protocol; ?></td>
-		</tr>
+
+		<?php if (isset($shared_domains) AND $shared_domains != 0): ?>
 		<tr>
 			<th style="font-weight:bold;"><?php _e('Domains on IP', UMBRELLA__TEXTDOMAIN); ?></th>
-			<td><?php echo number_format(count($shared_domains)); ?> domains</td>
+				<td><?php echo number_format($shared_domains); ?> domains</td>
 		</tr>
+		<?php endif; ?>
+
 		</tbody>
 	</table>
 
@@ -126,10 +132,18 @@ Umbrella\Controller::header(); ?>
 
 	    </style>
 	    <br>
-		<input type="submit" name="submit" id="update_modules" class="button button-primary" value="<?php _e('Update'); ?>">
+		<input type="submit" name="submit" id="update_modules" class="button button-primary" value="<?php _e('Save Changes', UMBRELLA__TEXTDOMAIN); ?>">
 	</form>
 
+	<hr>
 
+	<h3><?php _e('Automatic Plugin Updates.', UMBRELLA__TEXTDOMAIN); ?></h3>
+	<p><?php _e('Automatic updates of this plugin is enabled by default.', UMBRELLA__TEXTDOMAIN); ?></p>
+	<?php if(get_option('umbrella_sp_disable_auto_updates') AND get_option('umbrella_sp_disable_auto_updates') == 1): ?>
+		<a href="?page=umbrella-site-protection&amp;do=enable-automatic-updates" class="button button-primary"><?php _e('Enable automatic updates', UMBRELLA__TEXTDOMAIN); ?></a>
+	<?php else: ?>
+		<a href="?page=umbrella-site-protection&amp;do=disable-automatic-updates" class="button"><?php _e('Disable automatic updates', UMBRELLA__TEXTDOMAIN); ?></a>
+	<?php endif; ?>
 
 </div>
 
