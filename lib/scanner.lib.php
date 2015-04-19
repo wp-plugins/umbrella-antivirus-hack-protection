@@ -184,14 +184,20 @@ class Scanner
         $ip = $_SERVER['HTTP_HOST'];
         $url = 'http://api.hackertarget.com/reverseiplookup/?q=' . $ip;
 
+        if ($ip == 'localhost')
+            return 0;
+
         $data = wp_remote_get($url);
 
         if (is_array($data))
-            $domains = explode("\n", $data['body']);
+            $data = explode("\n", $data['body']);
         else 
-            $domains = array();
+            $data = array();
         
-        return $domains;
+        if (substr($data[0], 0, 10) == "No records") 
+            return 0;
+        else
+            return count($data);
     }    
 
     /**
@@ -380,41 +386,6 @@ class Scanner
     }    
 
     /**
-     * Update Core whitelist
-     * Update Core whitelist with the latest core download.
-     * @return void
-    */
-    static public function update_core_whitelist()
-    {
-        die("Time to update!");
-    }    
-
-    /**
-     * Reinstall file
-     * Download the right version of the file from 
-     * Github and replace the modified one.
-     * @return void
-    */
-    public function reinstall_file($file)
-    {
-        $file = esc_attr($file);
-        echo 'Re-install file: ' . $file;
-    }    
-
-    /**
-     * Compare file
-     * Download the right version of the file from 
-     * Github and compare it with the modified
-     * @return void
-    */
-    public function compare_file($file)
-    {
-        $file = esc_attr($file);
-        echo 'Compare file: ' . $file;
-    }
-
-
-    /**
      * WP Version
      * Get current WP version
      * @return void
@@ -466,12 +437,8 @@ add_action('admin_init', function() {
 
             switch($_GET['action'])
             {
-                case 'remove'; 
-                    $scanner->remove_file($_GET['file']); 
-                break;
+                case 'remove'; $scanner->remove_file($_GET['file']); break;
                 case 'ignore'; $scanner->ignore_file($_GET['file']); break;
-                case 'reinstall'; $scanner->reinstall_file($_GET['file']); break;
-                case 'compare'; $scanner->compare_file($_GET['file']); break;
                 case 'get_files'; $scanner->api_get_files(); break;
                 case 'check_file'; 
                     echo json_encode($scanner->check_file($_GET['file'])); 

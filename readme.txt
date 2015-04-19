@@ -1,14 +1,14 @@
 === Site Protection by Umbrella Plugins ===
 Contributors: rkjellberg
-Tags: antivirus, vulnerabilities, anti, hack, protection, firewall, trackbacks, pingbacks, version number, captcha, captcha login, secure login
-Keywords: antivirus, vulnerabilities, core scanner, protection, firewall, vulnerability Scanner, File Scanner, Hide Versions, Disable Pings, Captcha Login number, captcha, captcha login, secure login
+Tags: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
+Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Requires at least: 4.1.1
 Tested up to: 4.1.1
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, file Scanner, hide versions, disable pings, captcha login and more.
+WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, core scanner, block suspicious requests, hide versions, disable pings, captcha login and more.
 
 == Description ==
 
@@ -46,6 +46,13 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 4. screenshot-4.png 
 
 == Changelog ==
+
+= 1.4.1 = 
+*Release Date - 19 April, 2015*
+* Enable/Disable Automatic Updates for Umbrella Site Protection.
+* Admin notice on plugin updates.
+* Layout: New header in option pages.
+* New assets for plugin pages.
 
 = 1.4 = 
 *Release Date - 18 April, 2015*
