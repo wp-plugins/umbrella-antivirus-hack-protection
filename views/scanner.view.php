@@ -16,6 +16,9 @@ Umbrella\Controller::header(); ?>
 <p id="no-errors-found">
 	<?php _e('Core scanner succeeded without any errors. Your WordPress CORE is fine =)', UMBRELLA__TEXTDOMAIN); ?>
 </p>
+<?php if(is_array($fileslist) AND count($fileslist) != 0): ?>
+<h4 id="latest-results"><?php _e('Results from latest scan:', UMBRELLA__TEXTDOMAIN); ?></h4>
+<?php endif; ?>
 
 <table id="filescanner" class="wp-list-table widefat plugins" <?php
 	if (is_array($fileslist) AND count($fileslist) != 0) echo 'style="display:block;"';
@@ -24,6 +27,7 @@ Umbrella\Controller::header(); ?>
 		<tr>
 			<th style="width:120px;"><?php _e('Error', UMBRELLA__TEXTDOMAIN); ?></th>
 			<th><?php _e('File path', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('md5 checksum', UMBRELLA__TEXTDOMAIN); ?></th>
 			<th style="width:300px;"><?php _e('Action', UMBRELLA__TEXTDOMAIN); ?></th>
 		</tr>
 	</thead>
@@ -32,6 +36,7 @@ Umbrella\Controller::header(); ?>
 		<tr>
 			<th style="width:120px;"><?php _e('Error', UMBRELLA__TEXTDOMAIN); ?></th>
 			<th><?php _e('File path', UMBRELLA__TEXTDOMAIN); ?></th>
+			<th><?php _e('md5 checksum', UMBRELLA__TEXTDOMAIN); ?></th>
 			<th style="width:300px;"><?php _e('Action', UMBRELLA__TEXTDOMAIN); ?></th>
 		</tr>
 	</tfoot>
@@ -44,6 +49,9 @@ Umbrella\Controller::header(); ?>
 				<small>#<?php echo esc_attr($file['response']['error']['code']); ?></small>
 			</td>
 			<td><?php echo esc_attr($file['file']); ?></td>
+			<td>
+			<?php echo esc_attr($file['response']['md5']); ?>
+			</td>
 			<td>
 				<?php foreach($file['response']['buttons'] as $btn): ?>
 					<a href="<?php echo esc_url($btn['href']); ?>" class="button"><?php echo esc_attr($btn['label']); ?></a>

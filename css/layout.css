@@ -1,7 +1,7 @@
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,900);
 
 #wpcontent, #wpfooter {
-	background: #ecf0f1 !important;
+	background: #ecf0f1;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-weight: 400;
 }

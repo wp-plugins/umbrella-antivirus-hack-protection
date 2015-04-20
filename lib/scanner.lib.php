@@ -15,13 +15,8 @@ class Scanner
         $locale = get_locale();
         $data_file = UMBRELLA__PLUGIN_DIR . "data/wordpress-{$this->wp_version()}.db";
 
-        $ignored_files = array();
-        $ignored_files = get_option('umbrella-sp-ignored-files');
-
-        // If option is set, unserialize it into an array.
-        if (!empty($ignored_files)) 
-            $ignored_files = unserialize($ignored_files);
-
+        $ignored_files = $this->ignored_files();
+      
         // Return whitelist as array if found for current WP version.
         if (file_exists($data_file)) {
             $data = parse_ini_file($data_file, true);
@@ -33,6 +28,28 @@ class Scanner
         }
 
         else
+            return false;
+    }   
+
+    /**
+     * Get Ignored Files
+     * Get Ignored Files for the current WP version.
+     * @return void
+    */
+    public function ignored_files()
+    {
+        $wp_version = $this->wp_version();
+
+        $ignored_files = '';
+        $ignored_files = get_option('umbrella-sp-ignored-files');
+
+          // If option is set, unserialize it into an array.
+        if (!empty($ignored_files)) 
+            $ignored_files = unserialize($ignored_files);
+
+        if (isset($ignored_files[$wp_version]))
+            return $ignored_files[$wp_version];
+        else 
             return false;
     }   
 
@@ -321,6 +338,7 @@ class Scanner
                 'error' => array('code' => '0020', 'msg' => 'Modified file'),
                 'file' => $file,
                 'md5' => md5($file_data),
+                'original_md5' => $original_md5,
                 'buttons' => array(
                     array(
                         'label' => __('Ignore', UMBRELLA__TEXTDOMAIN),
@@ -365,12 +383,12 @@ class Scanner
     */
     public function ignore_file($file)
     {
-        $file = esc_attr($file);
-        $ignored_files = get_option('umbrella-sp-ignored-files');
+        $wp_version = $this->wp_version();
 
-        // If option is set, unserialize it into an array.
-        if (!empty($ignored_files)) 
-            $ignored_files = unserialize($ignored_files);
+        $file = esc_attr($file);
+
+        // Get ignored files.
+        $ignored_files = $this->ignored_files();
 
         // Read file data.
         $file_data = file_get_contents(ABSPATH . $file);
@@ -381,8 +399,10 @@ class Scanner
         // Add string and md5.
         $ignored_files[$file] = $md5;
 
+        $option[$wp_version] = $ignored_files;
+
         // Add new file top option cache.
-        update_option('umbrella-sp-ignored-files', serialize($ignored_files));
+        update_option('umbrella-sp-ignored-files', serialize($option));
     }    
 
     /**
@@ -394,20 +414,53 @@ class Scanner
     {
         global $wp_version;
         return str_replace('.','', $wp_version);
-    }
+    }  
 
-    public static function progressbar()
+    /**
+     * Build Core List
+     * Get md5 checksums and build core list db file.
+     * @return void
+    */
+    public function build_core_list()
     {
-        for ($i=1; $i <= 100; $i++) { 
-            echo "<div id='progress{$i}' class='progress'></div>";
+        $data_file = UMBRELLA__PLUGIN_DIR . "data/wordpress-{$this->wp_version()}.db";
+        $files = $this->list_core_files();
+
+
+        usort($files, function($a,$b) {
+            return strlen($a)-strlen($b);
+        });
+
+        $output = array();
+
+        foreach($files as $f) {
+
+            $file = ABSPATH . $f;
+
+            if (file_exists($file)) {
+
+                $contents = file_get_contents($file);
+                $md5_checksum = md5($contents);
+
+                $output[$f] = $md5_checksum;
+            }
         }
-        echo "<div style='clear:both;'></div>";
+
+        $output = arr2ini($output);
+
+        if (!file_exists($data_file)) {
+            file_put_contents($data_file, $output);
+            echo "write ok";
+        }
     }
 
 } 
 
 
 add_action( 'wp_ajax_umbrella_filescan', function() {
+
+    delete_transient('umbrella-file-scan');
+
     $scanner = new Scanner();
     $files = $scanner->list_core_files();
 
@@ -420,6 +473,7 @@ add_action( 'wp_ajax_umbrella_filescan', function() {
 
     // Cache scan for 30 minutes.
     set_transient('umbrella-file-scan', $output, 1800);
+    set_transient('umbrella-latest-file-scan', $scanner->wp_version() . UMBRELLA__VERSION, 1800);
 
     die(json_encode($output));
 } );
