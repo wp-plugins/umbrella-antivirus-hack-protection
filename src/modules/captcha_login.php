@@ -1,9 +1,10 @@
 <?php
+namespace Umbrella;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Displaying the Captcha Field in the Login Form
 add_action('login_form', function (){
-  if(class_exists('ReallySimpleCaptcha'))
+if(class_exists('ReallySimpleCaptcha'))
   {
     $captcha_instance = new ReallySimpleCaptcha();
     $word = $captcha_instance->generate_random_word();
@@ -28,8 +29,8 @@ add_filter('wp_authenticate_user', function($user, $password) {
 		{
 			$user_login = $user->user_login;
 		  // if there is a mis-match
-			Umbrella\Log::write('Captcha Login', "Blocked login attempt with captcha error for user: {$user_login} ");
-			$return_value = new WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
+			Log::write('Captcha Login', "Blocked login attempt with captcha error for user: {$user_login} ");
+			$return_value = new \WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
 		}
 
 		// remember to remove the prefix

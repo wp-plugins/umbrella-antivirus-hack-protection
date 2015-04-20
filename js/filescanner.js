@@ -7,6 +7,7 @@ jQuery("#startscanner").on('click', function() {
 
 	$('#no-errors-found').fadeOut();
 	$('#filescanner').fadeOut();
+	$('#latest-results').fadeOut();
 	$('tbody').empty();
 
 	var data = {
@@ -42,7 +43,7 @@ jQuery("#startscanner").on('click', function() {
 					};
 					
 				}
-				$thelist.append("<tr class='alternate'><td><strong>"+file.response.error.msg+"</strong><br><small>#"+file.response.error.code+"</small></td><td>"+file.file+"</td><td>"+buttons+"</td></tr>");
+				$thelist.append("<tr class='alternate'><td><strong>"+file.response.error.msg+"</strong><br><small>#"+file.response.error.code+"</small></td><td>"+file.file+"</td><td>"+file.response.md5+"</td><td>"+buttons+"</td></tr>");
 			};
 		}
 

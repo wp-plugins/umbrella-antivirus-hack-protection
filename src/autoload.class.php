@@ -42,6 +42,10 @@ class Autoload
 
 		// Check for updates of this plugin
 		$this->check_for_updates();
+
+		// Build core files list
+		//$scanner = new Scanner;
+		//$scanner->build_core_list();
 	}
 
 	/**

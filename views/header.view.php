@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit;  ?>
 <div class="wrap">
 <div id="umbrella-site-protection">
 

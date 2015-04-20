@@ -145,16 +145,18 @@ class Controller
 	
 		// Get data if cached.
 		$fileslist = array();
+
+		// Delete cache if updated plugin or core.
+		if (get_transient('umbrella-latest-file-scan') != $scanner->wp_version() . UMBRELLA__VERSION) {
+			delete_transient('umbrella-file-scan');
+			delete_transient('umbrella-latest-file-scan');
+		}
+
 		if (null !== get_transient('umbrella-file-scan'))
 			$fileslist = get_transient('umbrella-file-scan');
 
 		// Remove temporary ignored files from files list.
-     	$ignored_files = array();
-        $ignored_files = get_option('umbrella-sp-ignored-files');
-
-        // If option is set, unserialize it into an array.
-        if (!empty($ignored_files)) 
-            $ignored_files = unserialize($ignored_files);
+     	$ignored_files = $scanner->ignored_files();
 
         if (is_array($fileslist)) {
 
@@ -212,7 +214,6 @@ class Controller
 
 		wp_enqueue_style('umbrella-filescanner-css', UMBRELLA__PLUGIN_URL . 'css/layout.css');
 		wp_enqueue_script('umbrella-js', UMBRELLA__PLUGIN_URL . 'js/siteprotection.js');
-
 
 		$path_to_file = UMBRELLA__PLUGIN_DIR . 'views/' . $view . '.view.php';
 

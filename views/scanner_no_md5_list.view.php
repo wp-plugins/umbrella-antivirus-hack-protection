@@ -4,22 +4,9 @@ Umbrella\Controller::header();
 global $wp_version;
 ?>
 <p>
-<?php 
-if (UMBRELLA__LATEST_WP_VERSION < $wp_version):
-?>
-	<?php _e('An update for',UMBRELLA__TEXTDOMAIN); ?>
-	<strong>WordPress <?php echo $wp_version; ?></strong>
-	<?php _e('will be available within a few hours.', UMBRELLA__TEXTDOMAIN); ?>
-	</p><p>
-	<?php _e('Our database is not updated yet.',UMBRELLA__TEXTDOMAIN); ?>
-	</p><p>
+	<?php _e('This scanner does not work with your version of WordPress. Please update your core files.',UMBRELLA__TEXTDOMAIN); ?>
+</p><p>
 	<strong style="color:red"><?php _e('Please also make sure that Umbrella is running the latest version', UMBRELLA__TEXTDOMAIN); ?></strong>
-<?php
-else:
-	_e('This scanner does not work with your version of WordPress. Please update your core files.',UMBRELLA__TEXTDOMAIN);
-endif;
-?>
 </p>
-
 
 <?php Umbrella\Controller::footer(); ?>
