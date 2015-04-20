@@ -48,6 +48,7 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 = 1.4.2 = 
 *Release Date - 20 April, 2015*
+
 * Update for WordPress 4.2
 * Bugfix: Conflict when using Captcha login together with the Really Simple Captcha plugin.
 * Real Time Updates: Check for plugin updates each 10 minutes instead of each 12 hours.
@@ -55,6 +56,7 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 = 1.4.1 = 
 *Release Date - 19 April, 2015*
+
 * Enable/Disable Automatic Updates for Umbrella Site Protection.
 * Admin notice on plugin updates.
 * Layout: New header in option pages.
