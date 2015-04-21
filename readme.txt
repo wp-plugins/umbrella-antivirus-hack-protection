@@ -4,7 +4,7 @@ Tags: antivirus, site protection, vulnerabilities, core scanner, protection, fir
 Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Requires at least: 4.1
 Tested up to: 4.2
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,17 +46,22 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 == Changelog ==
 
-= 1.4.2 = 
+= 1.4.3 =
 *Release Date - 20 April, 2015*
+ 
+* Core files list database for WordPress 4.1.2
 
+= 1.4.2 =
+*Release Date - 20 April, 2015*
+ 
 * Update for WordPress 4.2
 * Bugfix: Conflict when using Captcha login together with the Really Simple Captcha plugin.
 * Real Time Updates: Check for plugin updates each 10 minutes instead of each 12 hours.
 * Added new versions to core scanner db: 4.1.2-alpha, 4.2-RC1, 4.2-RC2
 
-= 1.4.1 = 
+= 1.4.1 =
 *Release Date - 19 April, 2015*
-
+ 
 * Enable/Disable Automatic Updates for Umbrella Site Protection.
 * Admin notice on plugin updates.
 * Layout: New header in option pages.

@@ -4,7 +4,7 @@
 	Plugin URI: http://www.umbrellaplugins.com
 	Description: WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, file Scanner, hide versions, disable pings, captcha login and more.
 	Author: Umbrella Plugins
-	Version: 1.4.2
+	Version: 1.4.3
 	Author URI: http://www.umbrellaplugins.com
     Text Domain: umbrella-antivirus-hack-protection
     Domain Path: /languages
@@ -28,7 +28,7 @@ if (!session_id())
     session_start();
 
 // Define some good constants.
-define( 'UMBRELLA__VERSION', '1.4.2' );
+define( 'UMBRELLA__VERSION', '1.4.3' );
 define( 'UMBRELLA__LATEST_WP_VERSION', '4.2' );
 define( 'UMBRELLA__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
