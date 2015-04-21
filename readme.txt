@@ -2,7 +2,7 @@
 Contributors: rkjellberg
 Tags: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
-Requires at least: 4.1
+Requires at least: 3.7
 Tested up to: 4.2
 Stable tag: 1.4.3
 License: GPLv2 or later
