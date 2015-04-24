@@ -4,7 +4,7 @@ Tags: antivirus, site protection, vulnerabilities, core scanner, protection, fir
 Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Requires at least: 3.7
 Tested up to: 4.2
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 4. screenshot-4.png 
 
 == Changelog ==
+
+= 1.4.4 =
+*Release Date - 24 April, 2015*
+ 
+* Core files list database for WordPress 4.2
 
 = 1.4.3 =
 *Release Date - 20 April, 2015*
