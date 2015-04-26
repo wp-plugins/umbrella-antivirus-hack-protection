@@ -39,10 +39,10 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 == Screenshots ==
 
-1. screenshot-1.png 
-2. screenshot-2.png 
-3. screenshot-3.png 
-4. screenshot-4.png 
+1. Manage all settings in Dashboard
+2. Scan for plugins and themes vulnerabilities
+3. Scan for modifications in core files
+4. Log all hacking attempts and warnings
 
 == Changelog ==
 
