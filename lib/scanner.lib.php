@@ -66,7 +66,11 @@ class Scanner
                 'sslverify' => false
             )
         );
-        return $response['response']['code'];
+
+        if (!is_wp_error($response))
+            return $response['response']['code'];
+        else
+            return __('Unknown', UMBRELLA__TEXTDOMAIN);
     }
 
     /**
@@ -206,15 +210,16 @@ class Scanner
 
         $data = wp_remote_get($url);
 
-        if (is_array($data))
+        if (!is_wp_error($data)) {
             $data = explode("\n", $data['body']);
+            
+            if (substr($data[0], 0, 10) == "No records") 
+                return 0;
+        }
         else 
             $data = array();
         
-        if (substr($data[0], 0, 10) == "No records") 
-            return 0;
-        else
-            return count($data);
+        return count($data);
     }    
 
     /**
@@ -296,6 +301,36 @@ class Scanner
 
 
     /**
+     * Compare File
+     * Get whitelist for the current WP version.
+     * @return void
+    */
+    public function compare( $file = '' )
+    {
+        global $wp_version;
+        $whitelist = $this->whitelist();
+
+        // File is unknown (not included in core)
+        if (!isset($whitelist[$file])) 
+            return "File is not included in core";
+
+
+        $svn_url = "https://core.svn.wordpress.org/tags/{$wp_version}/{$file}";
+        $local_file_data = file_get_contents( ABSPATH . $file );
+
+        $svn_request = wp_remote_get($svn_url);
+
+        if (is_wp_error($svn_request))
+            return __('Connection Problem', UMBRELLA__TEXTDOMAIN);
+
+        $svn_file_data = $svn_request['body'];
+
+        $diff = Diff::compare($svn_file_data, $local_file_data);
+        return Diff::toTable($diff);
+
+    }
+
+    /**
      * Check File
      * Get whitelist for the current WP version.
      * @return void
@@ -303,7 +338,6 @@ class Scanner
     public function check_file( $file = '' )
     {
         $whitelist = $this->whitelist();
-
         $file_data = file_get_contents( ABSPATH . $file );
 
         // File is unknown (not included in core)
@@ -325,14 +359,16 @@ class Scanner
             );
 
         }
-        
+
         $original_md5 = $whitelist[$file];
 
         if (md5($file_data) != $original_md5)
         {
 
-            $url = "admin.php?page=umbrella-scanner&action=ignore&file={$file}";
-            $nonce_url =  wp_nonce_url( $url, "ignore_{$file}" );
+            $ignore_url = "admin.php?page=umbrella-scanner&action=ignore&file={$file}";
+            $ignore_nonce_url =  wp_nonce_url( $ignore_url, "ignore_{$file}" );
+            
+            $compare_url = "#compare-results";
             
             return array(
                 'error' => array('code' => '0020', 'msg' => 'Modified file'),
@@ -342,7 +378,11 @@ class Scanner
                 'buttons' => array(
                     array(
                         'label' => __('Ignore', UMBRELLA__TEXTDOMAIN),
-                        'href' => $nonce_url
+                        'href' => $ignore_nonce_url
+                    ),
+                    array(
+                        'label' => __('View Changes', UMBRELLA__TEXTDOMAIN),
+                        'href' => $compare_url
                     ),
                 )
             );
@@ -455,6 +495,15 @@ class Scanner
     }
 
 } 
+
+
+add_action( 'wp_ajax_umbrella_compare_file', function() {
+
+    $scanner = new Scanner();
+    $output = $scanner->compare($_POST['file_path']);
+    die($output);
+    
+} );
 
 
 add_action( 'wp_ajax_umbrella_filescan', function() {

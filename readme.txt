@@ -4,11 +4,11 @@ Tags: antivirus, site protection, vulnerabilities, core scanner, protection, fir
 Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Requires at least: 3.7
 Tested up to: 4.2
-Stable tag: 1.4.3
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, core scanner, block suspicious requests, hide versions, disable pings, captcha login and more.
+With features as vulnerability scanner, core scanner, block suspicious requests, hide versions, disable pings, captcha login and more.
 
 == Description ==
 
@@ -39,12 +39,33 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 == Screenshots ==
 
-1. screenshot-1.png 
-2. screenshot-2.png 
-3. screenshot-3.png 
-4. screenshot-4.png 
+1. Manage all settings in Dashboard
+2. Scan for plugins and themes vulnerabilities
+3. Scan for modifications in core files
+4. Log all hacking attempts and warnings
 
 == Changelog ==
+
+= 1.5 =
+*Release Date - 28 April, 2015*
+
+* Update for WordPress Core 4.2.1
+* Released a new version of the core scanner
+* Compare modified files against WordPress svn-repository
+* Enabled PRO upgrades
+* Bugfix: Captcha login didn't work on some sites
+* Bugfix: Return "Unkown" instead of error when connection is broken
+* Email subscription form
+* Compressed image files
+* Temporary removed swedish language (it will be back)
+* New screenshots
+* Changed all post request to WordPress ajax
+* Free BETA license key for users using this version.
+
+= 1.4.4 =
+*Release Date - 24 April, 2015*
+ 
+* Core files list database for WordPress 4.2
 
 = 1.4.3 =
 *Release Date - 20 April, 2015*

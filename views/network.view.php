@@ -1,14 +1,9 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header();
+Umbrella\Controller::header($data);
 global $wp_version;
 global $current_user;
-if (isset($refresh_page)): 
 ?>
-<script type="text/javascript">
-	location.href='admin.php?page=umbrella-sp-network';
-</script>
-<?php endif; ?>
 <h3><?php _e('An introduction to Umbrella Network', UMBRELLA__TEXTDOMAIN); ?></h3>
 <p><?php _e('Do you manage a lot of WordPress sites?', UMBRELLA__TEXTDOMAIN); ?> <strong>Then you'll love this.</strong></p> We will soon release our PREMIUM feature Umbrella Network. Upgrade to Umbrella Network and <strong>manage all of our services/plugins from one place</strong>. Link all of your websites together and we will make monitored security scans on all of your WordPress sites once an hour. If we find anything suspicious, we'll send you an email right away!</p>
 

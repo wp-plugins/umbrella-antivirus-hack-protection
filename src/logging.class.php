@@ -55,15 +55,17 @@ class Log
 	 * Update all admin_notice columns to 0.
 	 * @return void
 	*/
-	static public function reset_counter()
+	static public function reset_counter($id)
 	{
 		global $wpdb;
 
+		$id = esc_attr($id);
+
 		self::checkDatabaseTable();
-		
+
 		$table_name = $wpdb->prefix . 'umbrella_sp_log';
 
-		$wpdb->query("UPDATE {$table_name} SET admin_notice = 0");
+		$wpdb->query("UPDATE {$table_name} SET admin_notice = 0 WHERE id = {$id}");
 	}
 
 	/**
@@ -103,6 +105,19 @@ class Log
 
 		$logs = $wpdb->get_results( "SELECT * FROM {$table_name} ORDER BY TIME DESC" );
 
+
+		$i=0; $counter=0;
+		foreach ($logs as $log) { 
+
+			if (!defined('umbrella_sp_pro') AND $i > 2) 
+				unset($logs[$i]);
+			else {
+				self::reset_counter($log->id);
+			}
+
+			$i++;
+		}
+				
 		return $logs;
 	}	
 
