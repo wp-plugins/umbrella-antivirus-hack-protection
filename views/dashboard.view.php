@@ -1,47 +1,71 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header();
-if (isset($refresh_page)): 
-?>
-<script type="text/javascript">
-	location.href='admin.php?page=umbrella-site-protection';
-</script>
-<?php endif; ?>
+Umbrella\Controller::header($data); ?>
 
-<div style="width: 25%;float: right;">
+<div class="umbrella-sidebar" style="width: 25%;float: right;">
 
-	<h3><?php _e('Hosting Status', UMBRELLA__TEXTDOMAIN); ?></h3>
+
+	<h3><?php _e('Domain', UMBRELLA__TEXTDOMAIN); ?></h3>
 	<table class="wp-list-table widefat plugins">
 		<tbody id="the-list">
-		<tr>
-			<th style="font-weight:bold;"><?php _e('Server Domain', UMBRELLA__TEXTDOMAIN); ?></th>
-			<td><?php echo $ip; ?></td>
-		</tr>
-		<tr>
-			<th style="font-weight:bold;"><?php _e('Server Software', UMBRELLA__TEXTDOMAIN); ?></th>
-			<td><?php echo $software; ?></td>
-		</tr>
 
-		<?php if (isset($shared_domains) AND $shared_domains != 0): ?>
-		<tr>
-			<th style="font-weight:bold;"><?php _e('Domains on IP', UMBRELLA__TEXTDOMAIN); ?></th>
-				<td><?php echo number_format($shared_domains); ?> domains</td>
-		</tr>
-		<?php endif; ?>
+			<tr>
+				<th style="font-weight:bold;width:50%"><?php _e('Domain Name', UMBRELLA__TEXTDOMAIN); ?></th>
+				<td style="text-align:right;"><?php echo $ip; ?></td>
+			</tr>
+
+			<th style="font-weight:bold;width:50%"><?php _e('Safe Browsing', UMBRELLA__TEXTDOMAIN); ?></th>
+				<td style="text-align:right;"><?php echo $safebrowsing_status_code; ?>
+				<?php if ($safebrowsing_status_code==204): ?>
+					<strong style="color:green">OK</strong>
+				<?php endif; ?>
+			</td>
+
+			<?php if (isset($shared_domains) AND $shared_domains != 0): ?>
+			<tr>
+				<th style="font-weight:bold;width:50%"><?php _e('Domains on IP', UMBRELLA__TEXTDOMAIN); ?></th>
+					<td style="text-align:right;"><?php echo number_format($shared_domains); ?> domains</td>
+			</tr>
+			<?php endif; ?>
 
 		</tbody>
 	</table>
 
-	<h3><?php _e('Google Safe Browsing', UMBRELLA__TEXTDOMAIN); ?></h3>
+	<h3><?php _e('Server', UMBRELLA__TEXTDOMAIN); ?></h3>
+	<table class="wp-list-table widefat plugins">
+		<tbody id="the-list">
+
+			<tr>
+				<th style="font-weight:bold;width:50%"><?php _e('Software', UMBRELLA__TEXTDOMAIN); ?></th>
+				<td style="text-align:right;"><?php echo $software; ?></td>
+			</tr>
+
+			<tr>
+				<th style="font-weight:bold;width:50%"><?php _e('PHP Version', UMBRELLA__TEXTDOMAIN); ?></th>
+				<td style="text-align:right;"><?php echo $version; ?></td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<h3><?php _e('Database', UMBRELLA__TEXTDOMAIN); ?></h3>
 	<table class="wp-list-table widefat plugins">
 		<tbody id="the-list">
 		<tr>
-			<th style="font-weight:bold;"><?php _e('Status code', UMBRELLA__TEXTDOMAIN); ?></th>
-			<td><?php echo $safebrowsing_status_code; ?>
-			<?php if ($safebrowsing_status_code==204): ?>
-				<strong style="color:green">OK</strong>
-			<?php endif; ?>
-			</td>
+			<th style="font-weight:bold;width:50%"><?php _e('Database Type', UMBRELLA__TEXTDOMAIN); ?></th>
+			<td style="text-align:right;">mySQL</td>
+		</tr>
+		<tr>
+			<th style="font-weight:bold;width:50%"><?php _e('Database Host', UMBRELLA__TEXTDOMAIN); ?></th>
+			<td style="text-align:right;"><?php echo $mysql['host']; ?></td>
+		</tr>
+		<tr>
+			<th style="font-weight:bold;width:50%"><?php _e('Database Name', UMBRELLA__TEXTDOMAIN); ?></th>
+			<td style="text-align:right;"><?php echo $mysql['name']; ?></td>
+		</tr>
+		<tr>
+			<th style="font-weight:bold;width:50%"><?php _e('Database User', UMBRELLA__TEXTDOMAIN); ?></th>
+			<td style="text-align:right;"><?php echo $mysql['user']; ?></td>
 		</tr>
 		</tbody>
 	</table>
@@ -124,13 +148,6 @@ if (isset($refresh_page)):
 				?>			
 			</tbody>
 		</table>
-	    
-	    <style type="text/css">
-			tbody tr td.settings-name {
-			    font-weight: bold;
-			}
-
-	    </style>
 	    <br>
 		<input type="submit" name="submit" id="update_modules" class="button button-primary" value="<?php _e('Save Changes', UMBRELLA__TEXTDOMAIN); ?>">
 	</form>

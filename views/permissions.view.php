@@ -1,6 +1,6 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header(); ?>
+Umbrella\Controller::header($data); ?>
 
 <h4><?php _e('Writable Files', UMBRELLA__TEXTDOMAIN); ?></h4>
 <p>

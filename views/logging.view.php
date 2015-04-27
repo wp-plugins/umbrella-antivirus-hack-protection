@@ -1,12 +1,7 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header(); 
-if (isset($refresh_page)): 
+Umbrella\Controller::header($data); 
 ?>
-<script type="text/javascript">
-	location.href='admin.php?page=umbrella-logging';
-</script>
-<?php endif; ?>
 
 
 <span id="disable-admin-notices"  style="margin-left: 5px; float: right;">
@@ -55,7 +50,16 @@ if (isset($refresh_page)):
 			<td><?php echo $log->visitor_ip; ?></td>
 			<td><?php echo $log->message; ?></td>
 		</tr>	
-	<?php endforeach; ?>			
+	<?php endforeach; ?>	
+
+	<?php if (!defined('umbrella_sp_pro')): ?>
+	<tr class="alternate" style="background:#f39c12;">
+		<td colspan="4" style="color: #ffffff;">
+			You have <strong><?php echo $unread; ?></strong> unread and hidden log messages. Please <a href="admin.php?page=umbrella-sp-pro">enter your license key</a> to view all log entries.
+		</td>
+	</tr>	
+	<?php endif; ?>
+
 	</tbody>
 </table>
 <?php endif; ?>

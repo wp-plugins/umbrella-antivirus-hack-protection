@@ -9,7 +9,7 @@ class Modules
 		return array(
 			array('realtime_updates', 'Realtime Updates', __('Check for plugin updates each 10 minutes instead of each 12 hours.', UMBRELLA__TEXTDOMAIN ) ),
 			array('filter_requests', 'Filter Requests', __('Block all unauthorized and irrelevant requests through query strings.', UMBRELLA__TEXTDOMAIN ) ),
-			array('captcha_login', 'Captcha Login', __('Add CAPTCHA to login screen for a more secure login.', UMBRELLA__TEXTDOMAIN ) ),
+			array('captcha_login', 'Captcha Login', __('Add CAPTCHA to login screen.', UMBRELLA__TEXTDOMAIN ) ),
 			array('hide_version', 'Hide Versions', __('Hide version numbers in your front-end source code for WordPress-core and all of your plugins. This will affect meta-tags, stylesheet and javascripts urls.', UMBRELLA__TEXTDOMAIN ) ),
 			array('disable_ping', 'Disable Pings', __('Completely turn off trackbacks &amp; pingbacks to your site.', UMBRELLA__TEXTDOMAIN ) ),
 			array('disable_editor', 'Disable Themes & Plugins-editor', __('Disable Themes & Plugins-editor so that files can not be changed trough WordPress Dashboard.', UMBRELLA__TEXTDOMAIN ) ),

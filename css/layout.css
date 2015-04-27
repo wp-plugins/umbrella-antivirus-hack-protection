@@ -6,6 +6,14 @@
 	font-weight: 400;
 }
 
+table.diff td {
+	font-size: 12px !important;
+}
+
+#compare-container {
+	display: none;
+}
+
 #header-img {
 	width: 100%;
 	padding: 0px;
@@ -45,6 +53,13 @@
 	display: none;
 }
 
+.scanner-ajax-loader {
+	margin-left: 10px;
+	vertical-align: middle;
+	margin-top: -1px;
+	display: none;
+}
+
 #umbrella-site-protection p#no-errors-found
 {
 	color: #27ae60 !important;
@@ -54,7 +69,7 @@
 
 
 #umbrella-site-protection h2,h3,h4 {
-	color: #d52349 !important;
+	color: #d52349;
 }
 
 h1#umbrella-title {
@@ -106,4 +121,98 @@ h1#umbrella-title span {
 
 #umbrella-site-protection:before, #umbrella-site-protection:after {
   box-sizing: inherit;
+}
+
+.button { font-family: 'Open Sans', sans-serif; }
+
+#umbrella_serial_box_1 {
+	width: 100%;
+	padding: 25px 25px 20px 25px;
+	background: #ffffff;
+	margin-top: 22px;
+}
+
+#umbrella_serial_box_1 h3 { color:#f39c12; margin: 0px; }
+
+#umbrella_serial_box_2 {
+	width: 100%;
+	padding: 25px 25px 20px 25px;
+	background: #f39c12;
+	margin-top: 22px;
+}
+
+#umbrella_serial_box_2 h3 { color:#ffffff; margin-top: 0px; }
+
+
+
+#umbrella_subscribe_box {
+	display: none;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	padding: 25px 25px 0px 25px;
+	margin-left: -250px;
+	margin-top: -100px;
+	width: 500px;
+	box-shadow: 0px 0px 2px rgba(100,100,100,0.4);
+	background: #3498db;
+	color: #ffffff;
+}
+
+#umbrella_subscribe_box form {
+	margin: 0px;
+	padding: 0px;
+}
+
+#umbrella_subscribe_box h3 {
+	color: #ffffff;
+	margin: 0px;
+	margin-bottom: 25px;
+	text-transform: uppercase;
+}
+
+#umbrella_subscribe_box #nosubscribe {
+	color: #121212;
+	text-decoration: none;
+	font-size: 12px;
+	float: right;
+	vertical-align: middle;
+}
+
+#umbrella_subscribe_box p {
+	margin-top: 10px;
+	line-height: 22px;
+}
+
+#umbrella_subscribe_box input[type="text"] {
+	background: #efefef;
+	color: #121212;
+	padding: 15px;
+	border: 5px #fff solid;
+	font-size: 16px !important;
+	margin-top: 10px;
+}
+
+#umbrella_subscribe_box input[type="submit"] {
+	background: #2980b9;
+	color: #121212;
+	border: 5px #fff solid;
+	margin-top: 10px;
+	line-height: 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	padding: 15px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+
+#umbrella_subscribe_box input[type="submit"]:hover {
+	color: #2980b9;
+	background: #ffffff;
+}
+
+.umbrella-sidebar h3 { margin-bottom: 4px; }
+.umbrella-sidebar table {
+	margin-bottom: 20px;
 }

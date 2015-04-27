@@ -1,6 +1,6 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header();
+Umbrella\Controller::header($data);
 global $wp_version;
 ?>
 <p>
