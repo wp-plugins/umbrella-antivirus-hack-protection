@@ -8,17 +8,29 @@ class Controller
 	 * Controller for header
 	 * @return void
 	*/
-	static public function header() {
+	static public function header( $data = array() ) {
 
-		$data = array(
-		'navbars' => array(
-			array('umbrella-site-protection', __('Dashboard')),
+		// Button functions
+		if (isset($_GET['do'])) {
+
+			switch ($_GET['do']) {
+
+				case 'subscribe':
+					@wp_remote_get("https://network.umbrellaplugins.com/subscribe?e=" . esc_attr($_GET['e']));
+					$data['refresh_page'] = 1;
+				break;
+
+			}
+		}
+
+		$data['navbars'] = array(
+			array('umbrella-site-protection', __('Site Protection')),
 			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-scanner', __('Core Scanner', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
-			array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
+			//array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
-		));
+		);
 
 		self::make('header', $data);
 	}		
@@ -66,22 +78,77 @@ class Controller
 		}
 
 		$data['logs'] = Log::read();
-
-		Log::reset_counter();
+		$data['unread'] = Log::counter();;
 
 		self::make('logging', $data);
 	}		
 
 	/**
-	 * Umbrella SP Network
-	 * Controller for Logging
+	 * Umbrella to PRO
+	 * Controller for Upgrade to PRO
 	 * @return void
 	*/
-	static public function sp_network() {
-		$data = array();
-		self::make('network', $data);
+	static public function upgrade_pro() {
+		
+		if (!defined('umbrella_sp_pro'))
+			self::make('upgrade_pro');
 	}	
 
+
+	static public function ajax_validate_key() {
+		$key = esc_attr($_POST['key']);
+
+		$url = 	'https://network.umbrellaplugins.com/api/wp/validate-license/' .
+				'?site_url=' . site_url() .
+				'&key=' . $key;
+		
+		$response = wp_remote_get( $url );
+
+		$message = 'Connection error';
+
+		if( !is_wp_error($response) AND is_array($response) ) {
+			$data = json_decode($response['body']);
+
+			if (isset($data->status))
+			{
+
+				delete_option('umbrella_sp_serial');
+
+				switch($data->status) {
+
+					case 0:
+						$message = __('License key doesn\'t exists', UMBRELLA__TEXTDOMAIN);
+					break;
+
+					case 1:				
+						$message = __('Your plugin has been activated', UMBRELLA__TEXTDOMAIN);
+					break;
+
+					case 2:
+						$message = __('License key site limit has been reached', UMBRELLA__TEXTDOMAIN);
+					break;		
+
+					case 4:
+						$message = __('License key is valid', UMBRELLA__TEXTDOMAIN);
+					break;
+
+				}
+
+				add_option('umbrella_sp_serial', $key);
+				delete_transient('umbrella_sp_pro');
+				
+			}
+			die(json_encode(array(
+				'status' => $data->status,
+				'message' => $message
+			)));
+		}
+
+		else die(json_encode(array(
+			'status' => 0,
+			'message' => $message
+		)));
+	}
 	/**
 	 * Dashboard
 	 * Controller for view Dashboard
@@ -111,6 +178,10 @@ class Controller
 		$server_software = explode(' ', $server_software);
 		$server_software = $server_software[0];
 
+		$data['mysql']['user'] = DB_USER;
+		$data['mysql']['host'] = DB_HOST;
+		$data['mysql']['name'] = DB_NAME;
+
 		// Get charset
 		$server_protocol = $_SERVER['SERVER_PROTOCOL'];
 
@@ -122,6 +193,7 @@ class Controller
 		$data['ip'] = $_SERVER['HTTP_HOST'];
 		$data['software'] = $server_software;
 		$data['shared_domains'] = $shared_domains;
+		$data['version'] = phpversion();
 		
 		self::make('dashboard', $data);
 	}
@@ -213,7 +285,9 @@ class Controller
 	static public function make( $view = '', $data = array() ) {
 
 		wp_enqueue_style('umbrella-filescanner-css', UMBRELLA__PLUGIN_URL . 'css/layout.css');
-		wp_enqueue_script('umbrella-js', UMBRELLA__PLUGIN_URL . 'js/siteprotection.js');
+		wp_enqueue_script('umbrella-sp-js', UMBRELLA__PLUGIN_URL . 'js/siteprotection.js');
+		wp_enqueue_script('jquery-cookie', UMBRELLA__PLUGIN_URL . 'js/jquery.cookie.js', array('jquery'));
+		wp_enqueue_script('umbrella-sp-subscribe', UMBRELLA__PLUGIN_URL . 'js/subscribe.js');
 
 		$path_to_file = UMBRELLA__PLUGIN_DIR . 'views/' . $view . '.view.php';
 

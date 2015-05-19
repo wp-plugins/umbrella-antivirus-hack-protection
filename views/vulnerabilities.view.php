@@ -1,6 +1,6 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-Umbrella\Controller::header(); ?>
+Umbrella\Controller::header($data); ?>
 
 <h3><?php _e('Plugin Vulnerabilities', UMBRELLA__TEXTDOMAIN); ?></h3>
 <p>
@@ -23,7 +23,11 @@ Umbrella\Controller::header(); ?>
 	</tfoot>
 
 	<tbody id="the-list">
-		<?php foreach($plugins as $plugin): ?>
+		<?php foreach($plugins as $plugin):
+
+			if (!isset($plugin['vulndb']['response']))
+					continue;
+		?>
 		<tr>
 			<td>
 				<strong><?php echo esc_attr($plugin['Name']); ?></strong><br>
@@ -86,7 +90,12 @@ Umbrella\Controller::header(); ?>
 	</tfoot>
 
 	<tbody id="the-list">
-		<?php foreach($themes as $theme): ?>
+		<?php 
+			foreach($themes as $theme): 
+				
+			if (!isset($plugin['vulndb']['response']))
+				continue;
+		?>
 		<tr>
 			<td>
 				<strong><?php echo esc_attr($theme['Name']); ?></strong><br>

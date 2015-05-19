@@ -1,12 +1,11 @@
 <?php
-namespace Umbrella;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Displaying the Captcha Field in the Login Form
 add_action('login_form', function (){
-if(class_exists('ReallySimpleCaptcha'))
+if(class_exists('Umbrella\ReallySimpleCaptcha'))
   {
-    $captcha_instance = new ReallySimpleCaptcha();
+    $captcha_instance = new Umbrella\ReallySimpleCaptcha();
     $word = $captcha_instance->generate_random_word();
     $prefix = mt_rand();
     $captchaimg = $captcha_instance->generate_image( $prefix, $word );
@@ -21,16 +20,16 @@ if(class_exists('ReallySimpleCaptcha'))
 add_filter('wp_authenticate_user', function($user, $password) {
 	$return_value = $user;
 
-	if(class_exists('ReallySimpleCaptcha')){
+	if(class_exists('Umbrella\ReallySimpleCaptcha')){
 
-		$captcha_instance = new ReallySimpleCaptcha();
+		$captcha_instance = new Umbrella\ReallySimpleCaptcha();
 		$prefix = $_POST['umbrella_captcha_prefix'];
 		if(!$captcha_instance->check( $prefix, $_POST['umbrella_captcha_text'] ))
 		{
 			$user_login = $user->user_login;
 		  // if there is a mis-match
-			Log::write('Captcha Login', "Blocked login attempt with captcha error for user: {$user_login} ");
-			$return_value = new \WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
+			Umbrella\Log::write('Captcha Login', "Blocked login attempt with captcha error for user: {$user_login} ");
+			$return_value = new WP_Error( 'loginCaptchaError', 'Captcha Error. Please try again.' );
 		}
 
 		// remember to remove the prefix

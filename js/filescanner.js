@@ -1,8 +1,41 @@
+jQuery(document).on('ready', function() {
+		jQuery('a[href="#compare-results"]').on('click', function() {
+
+		$this = jQuery(this);
+		$file_path = $this.parent().parent().find('.file_path').text();
+
+		jQuery('#compare-container').fadeOut();
+		$this.attr('disabled', 'disabled');
+
+		var data = {
+			'action': 'umbrella_compare_file',
+			'file_path': $file_path
+		};
+
+		jQuery.post(ajaxurl, data, function(response) {
+			jQuery('#compare-results-data').html(response);
+			jQuery('#compare-container').fadeIn();
+			jQuery('#file_path_header').text($file_path);
+			jQuery('table.diff colgroup').remove();
+			jQuery('table.diff').prepend('<colgroup><col class="content diffsplit left"><col class="content diffsplit right"></colgroup>');
+			jQuery('.diffDeleted').addClass('diff-deletedline');
+			jQuery('.diffInserted').addClass('diff-addedline');
+			location.href='#compare-results';
+			$this.removeAttr('disabled');
+		});
+
+		return false;
+	});
+});
+
 jQuery("#startscanner").on('click', function() {
 
 	$ = jQuery;
 	$console = $('#umbrella-scan-console');
 	$('#umbrella-scan-console button').attr('disabled', 'disabled').removeClass('button-primary');
+	$('#umbrella-scan-console button .label').text('Scanning core files and folders');
+	$('.scanner-ajax-loader').fadeIn();
+
 	$thelist = $('#the-list');
 
 	$('#no-errors-found').fadeOut();
@@ -17,34 +50,21 @@ jQuery("#startscanner").on('click', function() {
 
 	$.post(ajaxurl, data, function(response) {
 
+		$('#umbrella-scan-console button .label').text('Scan core files');
+
 		console.log(response);
 		
 		var fileslist = JSON.parse(response);
 
 		$('#umbrella-scan-console button').removeAttr('disabled').addClass('button-primary');
+		$('.scanner-ajax-loader').fadeOut();
 
 		// If no errors is found.
 		if (fileslist.length == 0)
 			$('#no-errors-found').fadeIn();
 
 		else {
-
-			$('#filescanner').fadeIn();
-
-			// Else if error is found..
-			for (var x = fileslist.length - 1; x >= 0; x--) {
-				var buttons = '';
-				var file = fileslist[x];
-
-				if (file.response.buttons) {
-
-					for (var i = file.response.buttons.length - 1; i >= 0; i--) {
-						buttons += '<a href="' + file.response.buttons[i].href + '" class="button">' + file.response.buttons[i].label + '</a>';
-					};
-					
-				}
-				$thelist.append("<tr class='alternate'><td><strong>"+file.response.error.msg+"</strong><br><small>#"+file.response.error.code+"</small></td><td>"+file.file+"</td><td>"+file.response.md5+"</td><td>"+buttons+"</td></tr>");
-			};
+			location.href='admin.php?page=umbrella-scanner';
 		}
 
 		
