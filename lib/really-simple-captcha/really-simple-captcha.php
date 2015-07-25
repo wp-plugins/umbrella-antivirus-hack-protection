@@ -281,20 +281,6 @@ class ReallySimpleCaptcha {
 		if ( ! wp_mkdir_p( $dir ) )
 			return false;
 
-		$htaccess_file = $this->normalize_path( $dir . '.htaccess' );
-
-		if ( file_exists( $htaccess_file ) )
-			return true;
-
-		if ( $handle = @fopen( $htaccess_file, 'w' ) ) {
-			fwrite( $handle, 'Order deny,allow' . "\n" );
-			fwrite( $handle, 'Deny from all' . "\n" );
-			fwrite( $handle, '<Files ~ "^[0-9A-Za-z]+\\.(jpeg|gif|png)$">' . "\n" );
-			fwrite( $handle, '    Allow from all' . "\n" );
-			fwrite( $handle, '</Files>' . "\n" );
-			fclose( $handle );
-		}
-
 		return true;
 	}
 

@@ -120,9 +120,11 @@ Umbrella\Controller::header($data); ?>
 						$color = 'red';
 				?>
 					<strong style="color:<?php echo $color; ?>"><?php echo $v->title; ?> <small class="fixed_in">(fixed in <?php echo $v->fixed_in; ?>)</small></strong><br>
-					<?php foreach($v->url as $url): ?>
+					<?php if (isset($v->url)): foreach($v->url as $url): ?>
 						<a href="<?php echo $url; ?>"><?php echo $url; ?></a><br>
-					<?php endforeach; ?>
+					<?php endforeach; else: ?>
+						<small><?php _e('No external information found about this vulnerabilty.', UMBRELLA__TEXTDOMAIN ); ?></small>
+					<?php endif; ?>
 				<?php 
 					endforeach;
 					endif;

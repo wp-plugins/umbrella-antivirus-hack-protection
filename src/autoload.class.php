@@ -26,9 +26,6 @@ class Autoload
 		// Get all hooks from protected var $autoload.
 		$hooks = $this->autoload;
 
-		// Load all activated modules.
-		$this->validate_license();
-
 		// Loop trough hooks and add actions for those who have declared methods.
 		foreach ($hooks as $hook) {
 			if (method_exists($this, $hook)) 
@@ -45,10 +42,12 @@ class Autoload
 		// Check for updates of this plugin
 		$this->check_for_updates();
 
+		// Sync With Umbrella Network
+		$this->network_sync();
+
 		// Developer Debugging
-		// $scanner = new Scanner;
-		// $scanner->build_core_list();
-		// delete_transient('umbrella_sp_pro');
+		//$scanner = new Scanner;
+		//$scanner->build_core_list();
 	}
 
 	/**
@@ -60,54 +59,6 @@ class Autoload
 		add_action('wp_ajax_validate_key', array('\Umbrella\Controller', 'ajax_validate_key'));
 		add_action('wp_ajax_nopriv_validate_key', array('\Umbrella\Controller', 'ajax_validate_key'));
 	}		
-
-	/**
-	 * Validate Licens Key
-	 * Confirm that our license key hasn't expired.
-	 * @return void
-	*/
-	public function validate_license() {
-
-		$is_valid = false;
-
-		// Check license key.
-		if (!$key = get_option('umbrella_sp_serial')) 
-		{
-			delete_transient('umbrella_sp_pro');
-			add_option('umbrella_sp_serial', 'BETA');
-			Log::write('Site Protection PRO', 'Automatically activated free BETA version of Site Protection PRO.');
-		}
-
-		if (false === ($is_valid = get_transient('umbrella_sp_pro')))
-		{
-			$url = 	'https://network.umbrellaplugins.com/api/wp/validate-license/' .
-				'?site_url=' . site_url() .
-				'&key=' . $key;
-		
-			$response = wp_remote_get( $url );
-
-			if ( is_wp_error($response) ){
-				if (get_option('umbrella_sp_serial'))
-					$is_valid = true;
-				else
-					$is_valid = false;
-			}
-			
-			else {
-
-				$data = json_decode($response['body']);
-
-				if ($data->status == 4 || $data->status == 1)
-					$is_valid = true;
-
-			}
-
-			// check each hour.
-			set_transient('umbrella_sp_pro', $is_valid, 3600);
-		}
-
-		if ($is_valid) define('umbrella_sp_pro', 1);
-	}	
 
 	/**
 	 * Latest Version
@@ -149,6 +100,51 @@ class Autoload
 	            'filter_auto_update_plugin'
 	        ), 10, 2);
 		}
+	}	
+
+	/**
+	 * Network Sync
+	 * @since 1.6
+	 * @return void
+	*/
+	public function network_sync() {
+
+		$transient = get_transient( 'umbrella_sp_sync' );
+
+		//if( ! empty( $transient ) ) 
+			//return false;
+
+	    set_transient( 'umbrella_sp_sync', 1, 1800 );
+
+		global $wp_version;
+
+		// Get web server
+		$server_software = $_SERVER['SERVER_SOFTWARE'];
+		$server_software = explode(' ', $server_software);
+		$server_software = $server_software[0];
+
+		$data = array();
+		$data['core']['version'] = $wp_version;
+		$data['core']['language'] = get_locale();
+
+		$data['plugin']['version'] = UMBRELLA__VERSION;
+		$data['plugin']['auto_updates'] = (get_option('umbrella_sp_disable_auto_updates')) ? false : true;
+		$data['plugin']['modules'] = Modules::valid_modules_slugs();
+		$data['plugin']['log_entries'] = Log::counter(true);
+
+		$data['system']['php_version'] = phpversion();
+		$data['system']['server_version'] = $server_software;
+
+		$url = 	'https://network.umbrellaplugins.com/api/sync' .
+				'?site_url=' . site_url() .
+				'&data=' . urlencode(json_encode($data));
+		
+		$response = wp_remote_get( $url );
+
+		if ( is_wp_error($response) ){
+			$is_valid = true;
+		}
+		
 	}			
 
 	/**
@@ -195,7 +191,7 @@ class Autoload
 	public function action_links($links) {
 		
 		$links['settings'] = '<a href="admin.php?page=umbrella-site-protection">' . __('Settings', UMBRELLA__TEXTDOMAIN) . '</a>';
-		$links['logs'] = '<a href="admin.php?page=umbrella-logging">' . __('Logs', UMBRELLA__TEXTDOMAIN) . '</a>';
+		$links['logs'] = '<a href="admin.php?page=umbrella-sp-logging">' . __('Logs', UMBRELLA__TEXTDOMAIN) . '</a>';
 
 		return $links;
 	}	
@@ -240,14 +236,15 @@ class Autoload
 		if ($logs > 0 AND get_option('umbrella_sp_disable_notices') != 1):
 		?>
 	    <div class="error umbrella">
-	     	<a href="admin.php?page=umbrella-logging" class="button button-primary" style="float:right;margin-top: 3px;"><?php _e( 'View log', UMBRELLA__TEXTDOMAIN ); ?></a>
+	     	<a href="admin.php?page=umbrella-sp-logging" class="button button-primary" style="float:right;margin-top: 3px;"><?php _e( 'View logs', UMBRELLA__TEXTDOMAIN ); ?></a>
 	        <p>
-	        	<a href="admin.php?page=umbrella-logging"><strong><?php _e( 'Site Protection', UMBRELLA__TEXTDOMAIN ); ?></strong></a>: 
+	        	<a href="admin.php?page=umbrella-sp-logging"><strong><?php _e( 'Site Protection', UMBRELLA__TEXTDOMAIN ); ?></strong></a>: 
 	        	<?php printf( __( 'You have <strong>%d</strong> unread log message(s).', UMBRELLA__TEXTDOMAIN ), $logs); ?>
 	    	</p>
 	    </div>
 	    <?php
 		endif;
+
 	}
 
 	/**
@@ -267,29 +264,13 @@ class Autoload
 	 * @return void
 	*/
 	public function admin_menu() {
-		add_menu_page( 'Site Protection | Umbrella', __('Site Protection', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') , 'dashicons-shield', 3 ); 
-		
-		if (defined('umbrella_sp_pro'))
-			add_submenu_page( 'umbrella-site-protection', __('Site Protection PRO by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('Site Protection PRO by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
-		else
-			add_submenu_page( 'umbrella-site-protection', __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
+		add_menu_page( __('Site Protection', UMBRELLA__TEXTDOMAIN), __('Site Protection', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') , 'dashicons-shield', 3 ); 
+		add_submenu_page( 'umbrella-site-protection', __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
 		
 		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
 		add_submenu_page( 'umbrella-site-protection', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
 		add_submenu_page( 'umbrella-site-protection', __('Core Scanner', UMBRELLA__TEXTDOMAIN), __('Core Scanner', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
-		add_submenu_page( 'umbrella-site-protection', __('Logs', UMBRELLA__TEXTDOMAIN), __('Logs', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-logging', array('Umbrella\controller', 'logging') ); 
-		
-
-		$slug = null;
-		if (!defined('umbrella_sp_pro'))
-			$slug = 'umbrella-site-protection';
-
-			add_submenu_page( $slug, 
-					__('Upgrade to PRO!', UMBRELLA__TEXTDOMAIN),
-					'<span style="color:#f39c12;font-weight: bold;">' . __('Upgrade to PRO!', UMBRELLA__TEXTDOMAIN) . '</span>',
-					'administrator', 'umbrella-sp-pro', array('Umbrella\controller', 'upgrade_pro') ); 
-			
-		add_submenu_page( null, __('Umbrella Network', UMBRELLA__TEXTDOMAIN), __('Umbrella Network', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-sp-network', array('Umbrella\controller', 'sp_network') ); 
+		add_submenu_page( 'umbrella-site-protection', __('Logs', UMBRELLA__TEXTDOMAIN), __('Logs', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-sp-logging', array('Umbrella\controller', 'logging') ); 
 	}
 
 	/**

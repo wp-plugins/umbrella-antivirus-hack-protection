@@ -5,6 +5,19 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class Modules
 {
 
+	static public function valid_modules_slugs() {
+		$modules = self::valid_modules();
+
+		$count = count($modules);
+		$max_index = $count - 1;
+
+		for($i=0;$i<=$max_index;$i++) {
+			$output[] = $modules[$i][0];
+		}
+
+		return $output;
+	}
+
 	static public function valid_modules() { 
 		return array(
 			array('realtime_updates', 'Realtime Updates', __('Check for plugin updates each 10 minutes instead of each 12 hours.', UMBRELLA__TEXTDOMAIN ) ),
