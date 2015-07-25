@@ -27,7 +27,7 @@ class Controller
 			array('umbrella-site-protection', __('Site Protection')),
 			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-scanner', __('Core Scanner', UMBRELLA__TEXTDOMAIN)),
-			array('umbrella-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-sp-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
 			//array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
 		);
@@ -77,78 +77,13 @@ class Controller
 			}
 		}
 
-		$data['logs'] = Log::read();
+		$data['logs'] = (isset($_GET['lp'])) ? Log::read_page($_GET['lp']) : Log::read_page();
+		$data['ip'] = (isset($_GET['ip'])) ? esc_attr(urldecode($_GET['ip'])) : false;
 		$data['unread'] = Log::counter();;
 
 		self::make('logging', $data);
 	}		
 
-	/**
-	 * Umbrella to PRO
-	 * Controller for Upgrade to PRO
-	 * @return void
-	*/
-	static public function upgrade_pro() {
-		
-		if (!defined('umbrella_sp_pro'))
-			self::make('upgrade_pro');
-	}	
-
-
-	static public function ajax_validate_key() {
-		$key = esc_attr($_POST['key']);
-
-		$url = 	'https://network.umbrellaplugins.com/api/wp/validate-license/' .
-				'?site_url=' . site_url() .
-				'&key=' . $key;
-		
-		$response = wp_remote_get( $url );
-
-		$message = 'Connection error';
-
-		if( !is_wp_error($response) AND is_array($response) ) {
-			$data = json_decode($response['body']);
-
-			if (isset($data->status))
-			{
-
-				delete_option('umbrella_sp_serial');
-
-				switch($data->status) {
-
-					case 0:
-						$message = __('License key doesn\'t exists', UMBRELLA__TEXTDOMAIN);
-					break;
-
-					case 1:				
-						$message = __('Your plugin has been activated', UMBRELLA__TEXTDOMAIN);
-					break;
-
-					case 2:
-						$message = __('License key site limit has been reached', UMBRELLA__TEXTDOMAIN);
-					break;		
-
-					case 4:
-						$message = __('License key is valid', UMBRELLA__TEXTDOMAIN);
-					break;
-
-				}
-
-				add_option('umbrella_sp_serial', $key);
-				delete_transient('umbrella_sp_pro');
-				
-			}
-			die(json_encode(array(
-				'status' => $data->status,
-				'message' => $message
-			)));
-		}
-
-		else die(json_encode(array(
-			'status' => 0,
-			'message' => $message
-		)));
-	}
 	/**
 	 * Dashboard
 	 * Controller for view Dashboard

@@ -4,7 +4,7 @@
 	Plugin URI: http://www.umbrellaplugins.com
 	Description: WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, file Scanner, hide versions, disable pings, captcha login and more.
 	Author: Umbrella Plugins
-	Version: 1.5.1
+	Version: 1.6
 	Author URI: http://www.umbrellaplugins.com
     Text Domain: umbrella-antivirus-hack-protection
     Domain Path: /languages
@@ -28,8 +28,8 @@ if (!session_id())
     session_start();
 
 // Define some good constants.
-define( 'UMBRELLA__VERSION', '1.5.1' );
-define( 'UMBRELLA__LATEST_WP_VERSION', '4.2.2' );
+define( 'UMBRELLA__VERSION', '1.6' );
+define( 'UMBRELLA__LATEST_WP_VERSION', '4.2.3' );
 define( 'UMBRELLA__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_TMPURL', UMBRELLA__PLUGIN_URL . 'data/tmp/' );
@@ -37,9 +37,10 @@ define( 'UMBRELLA__PLUGIN_TMPDIR', UMBRELLA__PLUGIN_DIR . 'data/tmp/' );
 define( 'UMBRELLA__TEXTDOMAIN', 'umbrella-antivirus-hack-protection' );
 
 // Load plugin textdomain.
-add_action('init', function() {
+add_action('init', 'umbrella_plugin_init');
+function umbrella_plugin_init() {
     load_plugin_textdomain( UMBRELLA__TEXTDOMAIN, false, UMBRELLA__TEXTDOMAIN . '/languages' );
-});
+}
 
 // Include all libraries.
 // There is no libraries yet..

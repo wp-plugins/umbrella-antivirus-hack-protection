@@ -6,6 +6,17 @@
 	font-weight: 400;
 }
 
+.logdetails td {
+	background: #34495e;
+	color: #ffffff;
+}
+
+.paginator {
+	text-align: center;
+	font-size: 15px;
+	margin: 10px 0px;
+}
+
 table.diff td {
 	font-size: 12px !important;
 }

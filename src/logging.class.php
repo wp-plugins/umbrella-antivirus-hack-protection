@@ -73,7 +73,7 @@ class Log
 	 * Count unviewed log entries.
 	 * @return void
 	*/
-	static public function counter()
+	static public function counter($all = false)
 	{
 		global $wpdb;
 
@@ -81,7 +81,12 @@ class Log
 
 		$table_name = $wpdb->prefix . 'umbrella_sp_log';
 
-		if ($results = $wpdb->get_results("SELECT count(admin_notice) as count FROM {$table_name} WHERE admin_notice = 1"))
+		if ($all === false) 
+			$admin_notices = 'WHERE admin_notice = 1';
+		else
+			$admin_notices = '';
+
+		if ($results = $wpdb->get_results("SELECT count(admin_notice) as count FROM {$table_name} {$admin_notices}"))
 		{
 			return $results[0]->count;
 		}
@@ -89,13 +94,31 @@ class Log
 			return 0;
 	}
 
+	/**
+	 * Count by ip
+	 * Count log entries by ip
+	 * @return void
+	*/
+	static public function count_by_ip($ip = '::1')
+	{
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'umbrella_sp_log';
+
+		$ip = esc_attr($ip);
+		if ($results = $wpdb->get_results("SELECT count(id) as count FROM {$table_name} WHERE visitor_ip = '{$ip}'"))
+		{
+			return $results[0]->count;
+		}
+		else 
+			return 0;
+	}
 
 	/**
 	 * Read
 	 * Get log entries from database table
 	 * @return array
 	*/
-	static public function read()
+	static public function read($offset = 0, $limit = 25)
 	{
 		global $wpdb;
 
@@ -103,23 +126,85 @@ class Log
 
 		$table_name = $wpdb->prefix . 'umbrella_sp_log';
 
-		$logs = $wpdb->get_results( "SELECT * FROM {$table_name} ORDER BY TIME DESC" );
+		$ip = (isset($_GET['ip'])) ? esc_attr(urldecode($_GET['ip'])) : false;
 
+		if ($ip)
+			$logs = $wpdb->get_results( "SELECT * FROM {$table_name} WHERE visitor_ip = '{$ip}' ORDER BY ID DESC LIMIT {$limit} OFFSET {$offset}" );
+		else
+			$logs = $wpdb->get_results( "SELECT * FROM {$table_name} ORDER BY ID DESC LIMIT {$limit} OFFSET {$offset}" );
 
-		$i=0; $counter=0;
 		foreach ($logs as $log) { 
-
-			if (!defined('umbrella_sp_pro') AND $i > 2) 
-				unset($logs[$i]);
-			else {
-				self::reset_counter($log->id);
-			}
-
-			$i++;
+			self::reset_counter($log->id);
 		}
 				
 		return $logs;
 	}	
+
+
+	/**
+	 * Read page
+	 * Read a page of log entries
+	 * @return array
+	*/
+	static public function read_page($page = 1, $limit = 25) {
+
+		$page = esc_attr($page);
+		$limit = esc_attr($limit);
+
+		$offset = $page * $limit;
+		$offset = $offset - $limit;
+
+		return self::read($offset);
+	}
+
+	/**
+	 * Number of Pages
+	 * Count the number of pages
+	 * @return array
+	*/
+	static public function num_pages($limit = 25) {
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'umbrella_sp_log';
+
+		$limit = esc_attr($limit);
+
+		$ip = (isset($_GET['ip'])) ? esc_attr(urldecode($_GET['ip'])) : false;
+
+		if ($ip)
+			$results = $wpdb->get_results("SELECT id FROM {$table_name} WHERE visitor_ip = '{$ip}'");
+		else
+			$results = $wpdb->get_results("SELECT id FROM {$table_name}");
+
+		$count = count($results);
+
+		return ceil( $count / $limit );
+		
+	}
+
+	/**
+	 * Paginator
+	 * Generate page links on log page.
+	 * @return array
+	*/
+	static public function paginator($limit = 25) {
+
+		$pages = self::num_pages($limit);
+		$lp = (isset($_GET['lp']) ? esc_attr($_GET['lp']) : 1);
+		$o = "";
+
+		$ipslug = (isset($_GET['ip'])) ? '&ip=' . esc_attr(urldecode($_GET['ip'])) : '';
+
+		for ($i=1;$i<=$pages;$i++)
+		{
+			if ($lp == $i)
+				$o 	.= '<a href="?page=umbrella-sp-logging'.$ipslug.'&lp='.$i.'" style="font-weight:bold;">'.$i.'</a> ';
+			else
+				$o 	.= '<a href="?page=umbrella-sp-logging'.$ipslug.'&lp='.$i.'" style="text-decoration:none;">'.$i.'</a> ';
+		}
+
+		return $o;
+	}
 
 	/**
 	 * Empty Logs

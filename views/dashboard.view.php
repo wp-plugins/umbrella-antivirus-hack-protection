@@ -5,7 +5,7 @@ Umbrella\Controller::header($data); ?>
 <div class="umbrella-sidebar" style="width: 25%;float: right;">
 
 
-	<h3><?php _e('Domain', UMBRELLA__TEXTDOMAIN); ?></h3>
+	<h3><?php _e('General', UMBRELLA__TEXTDOMAIN); ?></h3>
 	<table class="wp-list-table widefat plugins">
 		<tbody id="the-list">
 
@@ -20,6 +20,11 @@ Umbrella\Controller::header($data); ?>
 					<strong style="color:green">OK</strong>
 				<?php endif; ?>
 			</td>
+
+			<tr>
+				<th style="font-weight:bold;width:50%"><?php _e('Plugin Version', UMBRELLA__TEXTDOMAIN); ?></th>
+				<td style="text-align:right;"><?php echo UMBRELLA__VERSION; ?></td>
+			</tr>
 
 			<?php if (isset($shared_domains) AND $shared_domains != 0): ?>
 			<tr>
@@ -84,7 +89,6 @@ Umbrella\Controller::header($data); ?>
 		</tr>
 		</tbody>
 	</table>
-
 </div>
 
 <div style="width: 70%; float:left;">
@@ -151,9 +155,29 @@ Umbrella\Controller::header($data); ?>
 	    <br>
 		<input type="submit" name="submit" id="update_modules" class="button button-primary" value="<?php _e('Save Changes', UMBRELLA__TEXTDOMAIN); ?>">
 	</form>
+</div>
 
-	<hr>
+<div style="clear:both;"></div>
+<br><hr>
 
+<?php if(!defined('umbrella_sp_pro')): ?>
+
+	<div style="float:right;width:74%;">
+	<br>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- Umbrella Plugin Dashboard -->
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:728px;height:90px"
+		     data-ad-client="ca-pub-3552894980397547"
+		     data-ad-slot="9268741798"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+<?php endif; ?>
+
+<div style="float:left;width: 24%;">
 	<h3><?php _e('Automatic Plugin Updates.', UMBRELLA__TEXTDOMAIN); ?></h3>
 	<p><?php _e('Automatic updates of this plugin is enabled by default.', UMBRELLA__TEXTDOMAIN); ?></p>
 	<?php if(get_option('umbrella_sp_disable_auto_updates') AND get_option('umbrella_sp_disable_auto_updates') == 1): ?>
@@ -161,7 +185,6 @@ Umbrella\Controller::header($data); ?>
 	<?php else: ?>
 		<a href="?page=umbrella-site-protection&amp;do=disable-automatic-updates" class="button"><?php _e('Disable automatic updates', UMBRELLA__TEXTDOMAIN); ?></a>
 	<?php endif; ?>
-
 </div>
 
 <?php Umbrella\Controller::footer(); ?>
