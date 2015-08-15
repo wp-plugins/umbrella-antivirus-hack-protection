@@ -3,8 +3,8 @@ Contributors: rkjellberg
 Tags: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Keywords: antivirus, site protection, vulnerabilities, core scanner, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests
 Requires at least: 3.7
-Tested up to: 4.2.1
-Stable tag: 1.6
+Tested up to: 4.2.4
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 4. Log all hacking attempts and warnings
 
 == Changelog ==
+
+= 1.7 =
+*Release Date - 15 aug, 2015*
+
+* Update for WordPress Core 4.2.4
 
 = 1.6 =
 *Release Date - 1 june, 2015*
