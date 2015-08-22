@@ -24,9 +24,10 @@ class Controller
 		}
 
 		$data['navbars'] = array(
-			array('umbrella-site-protection', __('Site Protection')),
-			array('umbrella-vulnerabilities', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN)),
-			array('umbrella-scanner', __('Core Scanner', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-site-protection', __('General')),
+			array('umbrella-vulnerabilities', __('Plugins & Themes', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-scanner', __('File System', UMBRELLA__TEXTDOMAIN)),
+			//array('umbrella-database', __('Database', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-sp-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
 			//array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
 			// array('umbrella-permissions', 'File &amp; Directories permissions'),
@@ -195,6 +196,46 @@ class Controller
 		$data['themes'] = $themes;
 
 		self::make('vulnerabilities', $data);
+	}		
+
+	/**
+	 * Database
+	 * Controller for view Database
+	 * @return void
+	*/
+	static public function database() {
+
+
+		// Button functions
+		if (isset($_GET['do'])) {
+
+			switch ($_GET['do']) {
+
+				case 'create-backup':
+					\Umbrella\Backup::database();
+					$data['refresh_page'] = 1;
+				break;
+			}
+		}
+
+
+		global $wpdb;
+
+		$size = 0;  
+		$results = $wpdb->get_results( 'SHOW TABLE STATUS' );
+
+		foreach($results as $r)
+			$size += $r->Data_length + $r->Index_length;  
+
+		$decimals = 2;  
+		$mbytes = number_format($size/(1024*1024),$decimals);
+
+		$data['mysql']['user'] = DB_USER;
+		$data['mysql']['host'] = DB_HOST;
+		$data['mysql']['name'] = DB_NAME;
+		$data['mysql']['size'] = $mbytes;
+
+		self::make('database', $data);
 	}	
 
 	/**

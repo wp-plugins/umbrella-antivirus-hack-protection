@@ -265,11 +265,12 @@ class Autoload
 	*/
 	public function admin_menu() {
 		add_menu_page( __('Site Protection', UMBRELLA__TEXTDOMAIN), __('Site Protection', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') , 'dashicons-shield', 3 ); 
-		add_submenu_page( 'umbrella-site-protection', __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
+		add_submenu_page( 'umbrella-site-protection', __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('General', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
 		
 		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
-		add_submenu_page( 'umbrella-site-protection', __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), __('Vulnerabilities', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
-		add_submenu_page( 'umbrella-site-protection', __('Core Scanner', UMBRELLA__TEXTDOMAIN), __('Core Scanner', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
+		add_submenu_page( 'umbrella-site-protection', __('Plugins & Themes', UMBRELLA__TEXTDOMAIN), __('Plugins & Themes', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
+		add_submenu_page( 'umbrella-site-protection', __('File System', UMBRELLA__TEXTDOMAIN), __('File System', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
+		//add_submenu_page( 'umbrella-site-protection', __('Database', UMBRELLA__TEXTDOMAIN), __('Database', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-database', array('Umbrella\controller', 'database') ); 
 		add_submenu_page( 'umbrella-site-protection', __('Logs', UMBRELLA__TEXTDOMAIN), __('Logs', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-sp-logging', array('Umbrella\controller', 'logging') ); 
 	}
 
