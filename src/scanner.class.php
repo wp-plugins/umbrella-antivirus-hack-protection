@@ -314,7 +314,6 @@ class Scanner
         if (!isset($whitelist[$file])) 
             return "File is not included in core";
 
-
         $svn_url = "https://core.svn.wordpress.org/tags/{$wp_version}/{$file}";
         $local_file_data = file_get_contents( ABSPATH . $file );
 

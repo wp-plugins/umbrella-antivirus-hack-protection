@@ -45,6 +45,9 @@ class Autoload
 		// Sync With Umbrella Network
 		$this->network_sync();
 
+		// Check if storage directory exists.
+		$this->checkStorageDir();
+
 		// Developer Debugging
 		//$scanner = new Scanner;
 		//$scanner->build_core_list();
@@ -58,6 +61,25 @@ class Autoload
 	public function init() {
 		add_action('wp_ajax_validate_key', array('\Umbrella\Controller', 'ajax_validate_key'));
 		add_action('wp_ajax_nopriv_validate_key', array('\Umbrella\Controller', 'ajax_validate_key'));
+	}	
+
+	/**
+	 * Check storage directory
+	 * This function will create your storage directory if it dont exist.
+	 * @return void
+	*/
+	public function checkStorageDir() {
+
+	    // Create a folder in the Uploads Directory of WordPress to store Umbrella Files
+	    if (!file_exists(UMBRElLA__STORAGE_DIR)) {
+	        mkdir(UMBRElLA__STORAGE_DIR, 0775, true);
+	    }
+
+	    // Create index.html to prevent file listing.
+	    if (!file_exists(UMBRElLA__STORAGE_DIR . 'index.html')) {
+	    	touch(UMBRElLA__STORAGE_DIR . 'index.html');
+	    }
+
 	}		
 
 	/**
@@ -266,11 +288,10 @@ class Autoload
 	public function admin_menu() {
 		add_menu_page( __('Site Protection', UMBRELLA__TEXTDOMAIN), __('Site Protection', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') , 'dashicons-shield', 3 ); 
 		add_submenu_page( 'umbrella-site-protection', __('Site Protection by Umbrella Plugins', UMBRELLA__TEXTDOMAIN), __('General', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-site-protection', array('Umbrella\controller', 'dashboard') ); 
-		
-		//add_submenu_page( 'umbrella', 'PERMISSIONS | WordPress Antivirus and Hack Protection', 'Permissions', 'administrator', 'umbrella-permissions', array('Umbrella\controller', 'permissions') ); 
+
 		add_submenu_page( 'umbrella-site-protection', __('Plugins & Themes', UMBRELLA__TEXTDOMAIN), __('Plugins & Themes', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-vulnerabilities', array('Umbrella\controller', 'vulnerabilities') ); 
-		add_submenu_page( 'umbrella-site-protection', __('File System', UMBRELLA__TEXTDOMAIN), __('File System', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
-		//add_submenu_page( 'umbrella-site-protection', __('Database', UMBRELLA__TEXTDOMAIN), __('Database', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-database', array('Umbrella\controller', 'database') ); 
+		add_submenu_page( 'umbrella-site-protection', __('WordPress CORE', UMBRELLA__TEXTDOMAIN), __('WordPress CORE', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-scanner', array('Umbrella\controller', 'scanner') ); 
+		add_submenu_page( 'umbrella-site-protection', __('Database Backup', UMBRELLA__TEXTDOMAIN), __('Database Backup', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-backup', array('Umbrella\controller', 'backup') ); 
 		add_submenu_page( 'umbrella-site-protection', __('Logs', UMBRELLA__TEXTDOMAIN), __('Logs', UMBRELLA__TEXTDOMAIN), 'administrator', 'umbrella-sp-logging', array('Umbrella\controller', 'logging') ); 
 	}
 
@@ -300,5 +321,3 @@ class Autoload
 
 	}
 }
-
-

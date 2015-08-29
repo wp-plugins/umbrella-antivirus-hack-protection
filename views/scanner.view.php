@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Umbrella\Controller::header($data); ?>
-<h3><?php _e('Core Scanner', UMBRELLA__TEXTDOMAIN); ?></h3>
+<h2><?php _e('Core Scanner', UMBRELLA__TEXTDOMAIN); ?></h2>
 
 <p>
 	<?php _e('This will search trough your core folders for unexpected files or modifications in core files.', UMBRELLA__TEXTDOMAIN); ?>

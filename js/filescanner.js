@@ -97,4 +97,3 @@ function umbrella_check_file( file, percent, index)
 
 	});
 }
-

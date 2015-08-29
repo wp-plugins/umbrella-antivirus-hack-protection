@@ -4,7 +4,7 @@
 	Plugin URI: http://www.umbrellaplugins.com
 	Description: WordPress Antivirus and Hack protection by Umbrella Plugins. With features as vulnerability scanner, file Scanner, hide versions, disable pings, captcha login and more.
 	Author: Umbrella Plugins
-	Version: 1.7.1
+	Version: 1.8
 	Author URI: http://www.umbrellaplugins.com
     Text Domain: umbrella-antivirus-hack-protection
     Domain Path: /languages
@@ -27,18 +27,24 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if (!session_id()) 
     session_start();
 
+$up_dir = wp_upload_dir();
+
 // Define some good constants.
-define( 'UMBRELLA__VERSION', '1.7.1' );
+define( 'UMBRELLA__VERSION', '1.8' );
 define( 'UMBRELLA__LATEST_WP_VERSION', '4.3' );
 define( 'UMBRELLA__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'UMBRELLA__PLUGIN_TMPURL', UMBRELLA__PLUGIN_URL . 'data/tmp/' );
 define( 'UMBRELLA__PLUGIN_TMPDIR', UMBRELLA__PLUGIN_DIR . 'data/tmp/' );
+define( 'UMBRElLA__STORAGE_DIR', $up_dir['basedir'] . '/umbrella/' );
+define( 'UMBRElLA__STORAGE_URL', $up_dir['baseurl'] . '/umbrella/' );
 define( 'UMBRELLA__TEXTDOMAIN', 'umbrella-antivirus-hack-protection' );
 
 // Load plugin textdomain.
 add_action('init', 'umbrella_plugin_init');
 function umbrella_plugin_init() {
+
+    // Load plugin translation textdomain.
     load_plugin_textdomain( UMBRELLA__TEXTDOMAIN, false, UMBRELLA__TEXTDOMAIN . '/languages' );
 }
 
@@ -46,10 +52,10 @@ function umbrella_plugin_init() {
 // There is no libraries yet..
 require_once( UMBRELLA__PLUGIN_DIR . 'lib/whois.lib.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'lib/diff.lib.php' );
-require_once( UMBRELLA__PLUGIN_DIR . 'lib/scanner.lib.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'lib/really-simple-captcha/really-simple-captcha.php' );
 
 // Include all source files
+require_once( UMBRELLA__PLUGIN_DIR . 'src/scanner.class.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'src/logging.class.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'src/modules.class.php' );
 require_once( UMBRELLA__PLUGIN_DIR . 'src/backup.class.php' );
