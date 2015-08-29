@@ -16,7 +16,7 @@ class Backup
 		$dump_url = UMBRElLA__STORAGE_URL . $dump_file_name;
 
 		// Connect to database and create the dump.
-		$dump = new \Ifsnop\Mysqldump\Mysqldump( DB_NAME , DB_USER, DB_PASSWORD );
+		$dump = new \Ifsnop\Mysqldump\Mysqldump( DB_NAME , DB_USER, DB_PASSWORD, DB_HOST );
 		$dump->start ( $dump_path );
 
 		// @todo: create success message.
@@ -30,7 +30,8 @@ class Backup
 		$files = glob($dir . "*.sql");
 
 		// Sort by file modified date.
-		usort($files, array('\Umbrella\Backup', 'sort'));
+		if(isset($files) AND count($files) > 0)
+			usort($files, array('\Umbrella\Backup', 'sort'));
 
 		// Prepare arrays for table listing.
 		foreach ($files as $file) {
