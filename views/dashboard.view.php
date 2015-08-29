@@ -112,16 +112,14 @@ Umbrella\Controller::header($data); ?>
 	 	<table class="wp-list-table widefat plugins">
 			<thead>
 				<tr>
-					<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-					<th style="width: 150px;"><?php _e('Name', UMBRELLA__TEXTDOMAIN); ?></th>
+					<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1">Välj alla</label><input id="cb-select-all-1" type="checkbox"></td>					<th style="width: 150px;"><?php _e('Name', UMBRELLA__TEXTDOMAIN); ?></th>
 					<th><?php _e('Description', UMBRELLA__TEXTDOMAIN); ?></th>
 				</tr>
 			</thead>
 
 			<tfoot>
 				<tr>
-					<th class="manage-column column-cb check-column"><input type="checkbox"></th>
-					<th style="width: 150px;"><?php _e('Name', UMBRELLA__TEXTDOMAIN); ?></th>
+					<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1">Välj alla</label><input id="cb-select-all-1" type="checkbox"></td>					<th style="width: 150px;"><?php _e('Name', UMBRELLA__TEXTDOMAIN); ?></th>
 					<th><?php _e('Description', UMBRELLA__TEXTDOMAIN); ?></th>
 				</tr>
 			</tfoot>

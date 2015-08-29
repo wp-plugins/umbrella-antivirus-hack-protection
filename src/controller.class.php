@@ -24,13 +24,11 @@ class Controller
 		}
 
 		$data['navbars'] = array(
-			array('umbrella-site-protection', __('General')),
+			array('umbrella-site-protection', __('General', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-vulnerabilities', __('Plugins & Themes', UMBRELLA__TEXTDOMAIN)),
-			array('umbrella-scanner', __('File System', UMBRELLA__TEXTDOMAIN)),
-			//array('umbrella-database', __('Database', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-scanner', __('WordPress CORE', UMBRELLA__TEXTDOMAIN)),
+			array('umbrella-backup', __('Database Backup', UMBRELLA__TEXTDOMAIN)),
 			array('umbrella-sp-logging', __('Logs', UMBRELLA__TEXTDOMAIN)),
-			//array('umbrella-sp-network', __('Umbrella Network*', UMBRELLA__TEXTDOMAIN)),
-			// array('umbrella-permissions', 'File &amp; Directories permissions'),
 		);
 
 		self::make('header', $data);
@@ -199,12 +197,13 @@ class Controller
 	}		
 
 	/**
-	 * Database
-	 * Controller for view Database
+	 * Backup
+	 * Controller for view Backup
 	 * @return void
 	*/
-	static public function database() {
-
+	static public function backup() {
+		
+		global $wpdb;
 
 		// Button functions
 		if (isset($_GET['do'])) {
@@ -217,9 +216,6 @@ class Controller
 				break;
 			}
 		}
-
-
-		global $wpdb;
 
 		$size = 0;  
 		$results = $wpdb->get_results( 'SHOW TABLE STATUS' );
@@ -235,7 +231,9 @@ class Controller
 		$data['mysql']['name'] = DB_NAME;
 		$data['mysql']['size'] = $mbytes;
 
-		self::make('database', $data);
+		$data['mysql_dumps'] = \Umbrella\Backup::getDatabaseDumps();
+
+		self::make('backup', $data);
 	}	
 
 	/**
