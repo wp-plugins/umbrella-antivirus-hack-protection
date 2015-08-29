@@ -43,6 +43,7 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 2. Scan for plugins and themes vulnerabilities
 3. Scan for modifications in core files
 4. Log all hacking attempts and warnings
+5. Compare modifications in core files.
 
 == Changelog ==
 
