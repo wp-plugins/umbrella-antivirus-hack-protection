@@ -133,10 +133,10 @@ class Autoload
 
 		$transient = get_transient( 'umbrella_sp_sync' );
 
-		//if( ! empty( $transient ) ) 
-			//return false;
+		if( ! empty( $transient ) ) 
+			return false;
 
-	    set_transient( 'umbrella_sp_sync', 1, 1800 );
+	    set_transient( 'umbrella_sp_sync', 1, 3600 );
 
 		global $wp_version;
 

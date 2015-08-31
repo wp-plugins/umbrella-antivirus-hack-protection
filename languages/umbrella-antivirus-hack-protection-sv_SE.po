@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Site Protection\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sat Aug 29 2015 18:45:50 GMT+0200 (CEST)\n"
-"PO-Revision-Date: Sat Aug 29 2015 19:24:47 GMT+0200 (CEST)\n"
+"PO-Revision-Date: Mon Aug 31 2015 22:52:53 GMT+0200 (CEST)\n"
 "Last-Translator: Local Development <rk@youngmedia.se>\n"
 "Language-Team: \n"
 "Language: Swedish\n"
@@ -395,7 +395,7 @@ msgstr "Uppdatera nu"
 #: ../src/autoload.class.php:249 ../src/autoload.class.php:263 ../src/autoload.
 #: class.php:289 ../src/autoload.class.php:289 ../src/modules/captcha_login.php:8
 msgid "Site Protection"
-msgstr "Webbplatskydd"
+msgstr "Webbplatsskydd"
 
 #: ../src/autoload.class.php:250
 #, php-format
