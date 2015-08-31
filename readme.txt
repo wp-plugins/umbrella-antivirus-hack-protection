@@ -4,7 +4,7 @@ Tags: antivirus, site protection, vulnerabilities, core scanner, database, backu
 Keywords: antivirus, site protection, vulnerabilities, core scanner, database, backup, database backup, protection, firewall, vulnerability, vulnerabilities, scanner, file, hide versions, disable pings, captcha, captcha login, secure login, umbrella plugins, block, requests, virusskydd, virus skydd
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.8
+Stable tag: 1.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,8 +47,20 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 
 == Changelog ==
 
+= 1.8.2 =
+*Release Date - 31 aug 2015*
+
+* Major bugfixes
+* PHP Code Optimization - Site Protection is now faster then before!
+* target="_blank" on outgoing vulnerability explanation links
+
+= 1.8.1 =
+*Release Date - 29 aug, 2015*
+
+* Bugfix for external servers in Database Backup
+
 = 1.8 =
-*Release Date - 22 aug, 2015*
+*Release Date - 29 aug, 2015*
 
 * Added support for Database Backup
 * Testing new navigation labels
@@ -56,7 +68,7 @@ You will find the 'Site Protection' tab in your WordPress admin panel.
 * Added swedish translation
 
 = 1.7.1 =
-*Release Date - 29 aug, 2015*
+*Release Date - 22 aug, 2015*
 
 * Update for WordPress Core 4.3
 
