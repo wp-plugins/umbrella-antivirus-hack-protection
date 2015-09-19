@@ -25,6 +25,7 @@ class Backup
 
 	public static function getDatabaseDumps() {
 		$dir = UMBRElLA__STORAGE_DIR;
+		$output = array();
 		
 		// Get all .sql files in datadir.
 		$files = glob($dir . "*.sql");
