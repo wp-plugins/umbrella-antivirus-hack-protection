@@ -47,10 +47,11 @@ Umbrella\Controller::header($data); ?>
 					if (is_object($vulndb)):
 					foreach($vulndb->plugin->vulnerabilities as $v):
 
-					if ($v->fixed_in <= $plugin['Version'])
+					if (version_compare($plugin['Version'], $v->fixed_in, ">=")) { 
 						$color = 'green';
-					else
-						$color = 'red';
+					} else { 
+						$color = 'red'; 
+					} 	
 				?>
 					<strong style="color:<?php echo $color; ?>"><?php echo $v->title; ?> <small class="fixed_in">(fixed in <?php echo $v->fixed_in; ?>)</small></strong>
 					<br>
